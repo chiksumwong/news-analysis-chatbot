@@ -25,7 +25,9 @@ SECRET_KEY = '79*z1jfbuyuv^_iv27s1(^qg+^&)x4lgnfpcr6tm8jl7h@n9=9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'news-analysis-chatbot.herokuapp.com'
+]
 
 
 # Application definition
