@@ -26,6 +26,7 @@ SECRET_KEY = '79*z1jfbuyuv^_iv27s1(^qg+^&)x4lgnfpcr6tm8jl7h@n9=9'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    '127.0.0.1',
     'news-analysis-chatbot.herokuapp.com'
 ]
 
