@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from django.http import HttpResponse
 
 def home (request):
-    return HttpResponse("Welcome!")
+    return Response("Welcome", status=status.HTTP_201_CREATED)
 
 class NewsViewSet(viewsets.ModelViewSet):
     queryset = News.objects.all()
