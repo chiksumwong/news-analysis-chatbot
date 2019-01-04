@@ -41,7 +41,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
-    'news-analysis-chatbot.herokuapp.com'
+    'news-analysis-chatbot.herokuapp.com',
 ]
 
 
@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'chatbot'
+    'chatbot',
 ]
 
 MIDDLEWARE = [

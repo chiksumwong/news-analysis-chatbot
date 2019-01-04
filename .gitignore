@@ -1,5 +1,3 @@
-news_analysis_chatbot/settings_secret.py
-
 # Byte-compiled / optimized / DLL files
 *.pyc
 __pycache__
