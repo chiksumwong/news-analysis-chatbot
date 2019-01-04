@@ -12,6 +12,20 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
+def get_env_variable(var_name):
+    try:
+        return os.environ[var_name]
+    except KeyError:
+        error_msg = 'Set the {} environment variable'.format(var_name)
+        raise ImproperlyConfigured(error_msg)
+
+try:
+    from .settings_secret import *
+except ImportError:
+    LINE_CHANNEL_ACCESS_TOKEN = get_env_variable('LINE_CHANNEL_ACCESS_TOKEN')
+    LINE_CHANNEL_SECRET = get_env_variable('LINE_CHANNEL_SECRET')
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -25,7 +39,10 @@ SECRET_KEY = '*odlj5j50vvzbfgg%rw!2kk-h82*2!*k@cy9$umzu8ib)w9t+('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'news-analysis-chatbot.herokuapp.com'
+]
 
 
 # Application definition
@@ -37,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'chatbot'
 ]
 
 MIDDLEWARE = [
@@ -116,5 +134,15 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+# Django REST Framework Setting
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}

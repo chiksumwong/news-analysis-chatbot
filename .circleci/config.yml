@@ -1,0 +1,9 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/news_analysis_chatbot
+    docker:
+      - image: circleci/python:3.7.1
+    steps:
+      - checkout
+      - run: echo "Start building"
