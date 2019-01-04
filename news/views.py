@@ -1,39 +1,50 @@
-from news.models import News
-from news.serializers import NewsSerializer
-
-from rest_framework import viewsets, status
-from rest_framework.decorators import permission_classes
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.parsers import JSONParser
-from rest_framework.response import Response
-
+import json
+import urllib.request
+import urllib.error
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
-def home (request):
-    return HttpResponse("Welcome", status=200)
+@csrf_exempt
+def elapp(request):
+    (mid,text)=_decode_json(request)
+    _to_LINE_server(mid, text)
+    if request.method == 'GET':
+        return HttpResponse("GET")
+    elif request.method == 'POST':  
+        return HttpResponse("POST")
+        #return HttpResponse("POST")
 
-class NewsViewSet(viewsets.ModelViewSet):
-    queryset = News.objects.all()
-    serializer_class = NewsSerializer
-    parser_classes = (JSONParser,)
+def _decode_json(request):
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode) 
+    _mid=body["result"][0]["content"]["from"]
+    _text=body["result"][0]["content"]["text"]  
+    return (_mid, _text)
 
-    def get_permissions(self):
-        if self.action in ('create',): #Create = Post method
-            self.permission_classes = [IsAuthenticated]
-        return [permission() for permission in self.permission_classes]
+def _to_LINE_server(_mid, _text):
+    payload = {
+        "to": [_mid],
+        "toChannel":1383378250,
+        "eventType":"138311608800106203",    
+        "content":{
+            "contentType":1,
+            "toType":1,
+            "text":_text
+            #"text":body_unicode for debug(JSON object)
+        } 
+    }
 
-    # [GET] api/news/
-    def list(self, request, **kwargs):
-        news = News.objects.all()
-        serializer = NewsSerializer(news, many=True)
+    req=urllib.request.Request("https://trialbot-api.line.me/v1/events",
+        data=json.dumps(payload).encode('utf8'),
+        headers={
+            "Content-type": "application/json; charset=UTF-8",
+            "X-Line-ChannelID": "Channel ID",
+            "X-Line-ChannelSecret": "Channel Secret",
+            "X-Line-Trusted-User-With-ACL": "u2b3adc9a2d583fb47b3e942f0043d339"
+        })
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    # [POST] api/news/
-    @permission_classes((IsAuthenticated,))
-    def create(self, request, **kwargs):
-        serializer = NewsSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    try:
+        with urllib.request.urlopen(req) as response:
+            print(response.read())
+    except urllib.error.HTTPError as err: 
+        print(err)
