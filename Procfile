@@ -1,1 +1,1 @@
-web: gunicorn locallibrary.wsgi --log-file -
+web: gunicorn --pythonpath news_analysis_chatbot news_analysis_chatbot.wsgi
