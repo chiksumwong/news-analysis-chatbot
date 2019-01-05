@@ -5,5 +5,5 @@ DATABASE = {
 }
 STATIC_ROOT = ‘static’
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['news-analysis-chatbot.herokuapp.com']
 DEBUG = False
