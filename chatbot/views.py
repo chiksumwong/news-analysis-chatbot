@@ -1,3 +1,4 @@
+import json
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
@@ -5,6 +6,10 @@ from django.views.decorators.csrf import csrf_exempt
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
+
+import base64
+import hashlib
+import hmac
 
 
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
@@ -16,14 +21,13 @@ def callback(request):
 
     if request.method == 'POST':
         
-
         # Identify the request whether come from Line Server
         signature = request.META.get("HTTP_X_LINE_SIGNATURE")
+        # signature = request.META['HTTP_X_LINE_SIGNATURE']
 
         # Get the request body from Line Server
-        body = request.body
-        body = body.decode('UTF-8')
-
+        body = request.body.decode('utf-8')
+        
         try:
             # Parse all event with them row
             events = parser.parse(body, signature)
@@ -42,6 +46,6 @@ def callback(request):
                     )
 
                 
-        return HttpResponse(body, status=200)
+        return HttpResponse(events, status=200)
     else:
         return HttpResponseBadRequest()
