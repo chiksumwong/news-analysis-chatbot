@@ -21,7 +21,8 @@ def callback(request):
         signature = request.META.get("HTTP_X_LINE_SIGNATURE")
 
         # Get the request body from Line Server
-        body = request.body.decode('utf-8')
+        body = request.body
+        body = body.decode('UTF-8')
 
         try:
             # Parse all event with them row
@@ -41,6 +42,6 @@ def callback(request):
                     )
 
                 
-        return HttpResponse(status=200)
+        return HttpResponse(body, status=200)
     else:
         return HttpResponseBadRequest()
