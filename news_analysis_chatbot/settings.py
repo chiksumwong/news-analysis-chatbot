@@ -12,18 +12,21 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
-def get_env_variable(var_name):
-    try:
-        return os.environ[var_name]
-    except KeyError:
-        error_msg = 'Set the {} environment variable'.format(var_name)
-        raise ImproperlyConfigured(error_msg)
+# def get_env_variable(var_name):
+#     try:
+#         return os.environ[var_name]
+#     except KeyError:
+#         error_msg = 'Set the {} environment variable'.format(var_name)
+#         raise ImproperlyConfigured(error_msg)
 
-try:
-    from .settings_secret import *
-except ImportError:
-    LINE_CHANNEL_ACCESS_TOKEN = get_env_variable('LINE_CHANNEL_ACCESS_TOKEN')
-    LINE_CHANNEL_SECRET = get_env_variable('LINE_CHANNEL_SECRET')
+# try:
+#     from .settings_secret import *
+# except ImportError:
+#     LINE_CHANNEL_ACCESS_TOKEN = get_env_variable('LINE_CHANNEL_ACCESS_TOKEN')
+#     LINE_CHANNEL_SECRET = get_env_variable('LINE_CHANNEL_SECRET')
+
+LINE_CHANNEL_SECRET = '2wYplb6KMvzXda7KT/sf18MhZykRlEjQIzvqs2qFI+DrGXnKak8frZ7qyqVwNSvd7/jG/3mZVBFY5g6LJxprBdJHPEZMqVUKahDtFVBl8xmQ9DsFPZcC9NceR95Fh1yJ/yUc2tYWq+YFRNLXdKa+sAdB04t89/1O/w1cDnyilFU='
+LINE_CHANNEL_ACCESS_TOKEN = '979627ceddbe834054c388c19f908b7f'
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)

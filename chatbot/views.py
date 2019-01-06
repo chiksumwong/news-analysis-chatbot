@@ -8,31 +8,39 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
 
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
-handler = WebhookParser(settings.LINE_CHANNEL_SECRET)
+parser  = WebhookParser(settings.LINE_CHANNEL_SECRET)
 
 
 @csrf_exempt
 def callback(request):
 
-    return HttpResponse(status=200)
-    
-    # if request.method == 'POST':
-    #     signature = request.META['X-Line-Signature']
-    #     body = request.body.decode('utf-8')
+    if request.method == 'POST':
 
-    #     try:
-    #         events = parser.parse(body, signature)
-    #     except InvalidSignatureError:
-    #         return HttpResponseForbidden()
-    #     except LineBotApiError:
-    #         return HttpResponseBadRequest()
+        # Identify the request whether come from Line Server
+        signature = request.META['HTTP_X_LINE_SIGNATURE']
 
-    #     for event in events:
-    #         if isinstance(event, MessageEvent):
-    #             line_bot_api.reply_message(
-    #                 event.reply_token,
-    #                TextSendMessage(text=event.message.text)
-    #             )
-    #     return HttpResponse()
-    # else:
-    #     return HttpResponseBadRequest()
+        # Get the request body from Line Server
+        body = request.body.decode('utf-8')
+
+        try:
+            # Parse all event with them row
+            events = parser.parse(body, signature)
+        except InvalidSignatureError:                      # If the request is not come form Line Server
+            return HttpResponseForbidden()
+        except LineBotApiError:
+            return HttpResponseBadRequest()
+
+
+        for event in events:
+            if isinstance(event, MessageEvent):            # Make sure the even is 'Message Event'
+                if isinstance(event.message, TextMessage): # Make sure the message is 'Text Message'
+                    line_bot_api.reply_message(
+                        event.reply_token,
+                        TextSendMessage(text=event.message.text)
+                    )
+
+                
+
+        return HttpResponse(status=200)
+    else:
+        return HttpResponseBadRequest()
