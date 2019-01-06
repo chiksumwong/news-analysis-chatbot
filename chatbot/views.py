@@ -27,25 +27,30 @@ def callback(request):
 
         # Get the request body from Line Server
         body = request.body.decode('utf-8')
-        
-        try:
-            # Parse all event with them row
-            events = parser.parse(body, signature)
-        except InvalidSignatureError:                      # If the request is not come form Line Server
-            return HttpResponseForbidden()
-        except LineBotApiError:
-            return HttpResponseBadRequest()
+
+        events = parser.parse(body, signature)
+
+        # try:
+        #     # Parse all event with them row
+            
+        # except InvalidSignatureError:                      # If the request is not come form Line Server
+        #     return HttpResponseForbidden()
+        # except LineBotApiError:
+        #     return HttpResponseBadRequest()
 
 
         for event in events:
-            if isinstance(event, MessageEvent):            # Make sure the even is 'Message Event'
-                if isinstance(event.message, TextMessage): # Make sure the message is 'Text Message'
-                    line_bot_api.reply_message(
-                        event.reply_token,
-                        TextSendMessage(text=event.message.text)
-                    )
-
-                
-        return HttpResponse(events, status=200)
+            # if isinstance(event, MessageEvent):            # Make sure the even is 'Message Event'
+            #     if isinstance(event.message, TextMessage): # Make sure the message is 'Text Message'
+            #         line_bot_api.reply_message(
+            #             event.reply_token,
+            #             TextSendMessage(text=event.message.text)
+            #         )
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=event.message.text)
+            )
+            
+        return HttpResponse(status=200)
     else:
         return HttpResponseBadRequest()
