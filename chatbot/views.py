@@ -66,5 +66,5 @@ def detect_fake_news(text):
     prediction = load_model.predict([text])
     probability = load_model.predict_proba([text])
 
-    output = "The news is " + str(prediction[0]) + ", The truth probability is " + str(probability[0][0]) +"."
+    output = "The news is " + str(prediction[0]) + ", The fake news probability is " + str(probability[0][0]) +"."
     return output
