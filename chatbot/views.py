@@ -1,3 +1,4 @@
+import os
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
@@ -43,7 +44,7 @@ def webhook(request):
 
 
         # Response 200
-        return HttpResponse(status=200)
+        return HttpResponse(reply_text, status=200)
     else:
         return HttpResponseBadRequest()
 
@@ -60,11 +61,10 @@ def reply_to_line(reply_token, reply_text):
 
 
 # Detect the fake news
-def detect_fake_news(var):
-    load_model = pickle.load(
-        open('./../fake_news_dection_model/final_model.sav', 'rb'))
-    prediction = load_model.predict([var])
-    prob = load_model.predict_proba([var])
+def detect_fake_news(text):
+    load_model = pickle.load(open(os.path.join(settings.BASE_DIR, 'fake_news_detection_model/final_model.sav'), 'rb'))
+    prediction = load_model.predict([text])
+    probability = load_model.predict_proba([text])
 
-    output = "The news is " + prediction + ", The truth probability is " + prob
+    output = "The news is " + str(prediction[0]) + ", The truth probability is " + str(probability[0][0]) +"."
     return output
