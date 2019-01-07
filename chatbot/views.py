@@ -6,36 +6,65 @@ from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
+import pickle
+
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
-parser  = WebhookParser(settings.LINE_CHANNEL_SECRET)
+parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
 
 
 @csrf_exempt
-def callback(request):
+def webhook(request):
     if request.method == 'POST':
-        
+
         # Identify the request whether come from Line Server
         signature = request.META.get("HTTP_X_LINE_SIGNATURE")
-
         # Get the request body from Line Server
         body = request.body.decode('utf-8')
 
+
+        # Parse all event with them row
         try:
-            # Parse all event with them row
             events = parser.parse(body, signature)
         except InvalidSignatureError:                      # If the request is not come form Line Server
             return HttpResponseForbidden()
         except LineBotApiError:
             return HttpResponseBadRequest()
 
+
+        # Handle each event
         for event in events:
-            if isinstance(event, MessageEvent):            # Make sure the even is 'Message Event'
-                if isinstance(event.message, TextMessage): # Make sure the message is 'Text Message'
-                    line_bot_api.reply_message(
-                        event.reply_token,
-                        TextSendMessage(text=event.message.text)
-                    )
-            
-        return HttpResponse()
+            # Make sure the even is 'Message Event'
+            if isinstance(event, MessageEvent):
+                # Make sure the message is 'Text Message'
+                if isinstance(event.message, TextMessage):
+                    reply_text = detect_fake_news(event.message.text)
+                    # Reply to Line
+                    reply_to_line(event.reply_token, reply_text)
+
+
+        # Response 200
+        return HttpResponse(status=200)
     else:
         return HttpResponseBadRequest()
+
+
+# Reply to Line
+def reply_to_line(reply_token, reply_text):
+    if reply_text == None:
+        return None
+
+    line_bot_api.reply_message(
+        reply_token,
+        TextSendMessage(text=reply_text)
+    )
+
+
+# Detect the fake news
+def detect_fake_news(var):
+    load_model = pickle.load(
+        open('./../fake_news_dection_model/final_model.sav', 'rb'))
+    prediction = load_model.predict([var])
+    prob = load_model.predict_proba([var])
+
+    output = "The news is " + prediction + ", The truth probability is " + prob
+    return output
