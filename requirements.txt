@@ -27,3 +27,5 @@ urllib3==1.24.1
 virtualenv==16.0.0
 wincertstore==0.2
 wrapt==1.10.11
+mongoengine==0.16.3
+django-rest-framework-mongoengine==3.3.1

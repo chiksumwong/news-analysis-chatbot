@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import mongoengine
 
 # def get_env_variable(var_name):
 #     try:
@@ -96,11 +97,18 @@ WSGI_APPLICATION = 'news_analysis_chatbot.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # }
 }
+
+mongoengine.connect(
+    db="news_analysis_chatbot",
+    username='dbuser',
+    password='Passw0rd',
+    host="cluster0-shard-00-00-qadtf.mongodb.net"
+)
 
 
 # Password validation
