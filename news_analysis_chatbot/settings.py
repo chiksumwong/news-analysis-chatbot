@@ -110,6 +110,11 @@ mongoengine.connect(
     host="cluster0-shard-00-00-qadtf.mongodb.net"
 )
 
+# mongoengine.connect(
+#     db="news_analysis_chatbots",
+#     host="localhost"
+# )
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
