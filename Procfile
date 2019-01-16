@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath news_analysis_chatbot news_analysis_chatbot.wsgi
+web: gunicorn news_analysis_chatbot.wsgi
