@@ -27,7 +27,7 @@ def webhook(request):
         # Parse all event with them row
         try:
             events = parser.parse(body, signature)
-        except InvalidSignatureError:                      # If the request is not come form Line Server
+        except InvalidSignatureError:              # If the request is not come form Line Server
             return HttpResponseForbidden()
         except LineBotApiError:
             return HttpResponseBadRequest()
