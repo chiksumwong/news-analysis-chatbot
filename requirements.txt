@@ -28,3 +28,4 @@ wincertstore==0.2
 wrapt==1.10.11
 mongoengine==0.16.3
 django-rest-framework-mongoengine==3.3.1
+dnspython==1.16.0

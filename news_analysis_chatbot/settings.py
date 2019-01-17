@@ -103,28 +103,12 @@ DATABASES = {
     # }
 }
 
-# # Cloud Mongodb
-# mongoengine.connect(
-#     db="news_analysis_chatbot",
-#     username='dbuser',
-#     password='Passw0rd',
-#     host="cluster0-shard-00-00-qadtf.mongodb.net"
-# )
 
-# mLab Mongodb
+# Local Host
 mongoengine.connect(
-    db="news_analysis_chatbot",
-    username='dbuser',
-    password='Passw0rd',
-    host='ds063909.mlab.com',
-    port=63909
+    db="news_analysis_chatbots",
+    host="localhost"
 )
-
-## Local Host
-# mongoengine.connect(
-#     db="news_analysis_chatbots",
-#     host="localhost"
-# )
 
 
 # Password validation

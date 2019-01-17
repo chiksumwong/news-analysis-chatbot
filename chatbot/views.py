@@ -2,12 +2,18 @@ import os
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render
+ 
+from rest_framework_mongoengine import viewsets as meviewsets
+from chatbot.serializers import NewsSerializer
+from chatbot.models import News
 
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
 import pickle
+
 
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
@@ -68,3 +74,8 @@ def detect_fake_news(text):
 
     output = "The news is " + str(prediction[0]) + ", The fake news probability is " + str(probability[0][0]) +"."
     return output
+
+class NewsViewSet(meviewsets.ModelViewSet):
+    lookup_field = 'id'
+    queryset = News.objects.all()
+    serializer_class = NewsSerializer
