@@ -11,3 +11,11 @@ $ python manage.py createsuperuser --email admin@example.com --username admin
 
 # Start Server:
 $ python manage.py runserver
+
+# url
+## Chatbot
+[POST] http://127.0.0.1:8000/chatbot/webhook/
+
+## News
+[GET] http://127.0.0.1:8000/api/news/
+[POST] http://127.0.0.1:8000/api/news/

@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'chatbot',
+    'news',
 ]
 
 MIDDLEWARE = [
@@ -103,16 +104,16 @@ DATABASES = {
     # }
 }
 
-# Cloud Mongodb
-mongoengine.connect(
-    host='mongodb+srv://dbuser:Passw0rd@cluster0-qadtf.mongodb.net/news_analysis_chatbot?retryWrites=true'
-)
-
-# # Local Host
+# # Cloud Mongodb
 # mongoengine.connect(
-#     db="news_analysis_chatbots",
-#     host="localhost"
+#     host='mongodb+srv://dbuser:Passw0rd@cluster0-qadtf.mongodb.net/news_analysis_chatbot?retryWrites=true'
 # )
+
+# Local Host
+mongoengine.connect(
+    db="news_analysis_chatbots",
+    host="localhost"
+)
 
 
 # Password validation

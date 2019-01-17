@@ -1,8 +1,9 @@
 from django.shortcuts import render
- 
+
+# Create your views here.
 from rest_framework_mongoengine import viewsets as meviewsets
-from chatbot.serializers import NewsSerializer
-from chatbot.models import News
+from news.serializers import NewsSerializer
+from news.models import News
  
 class NewsViewSet(meviewsets.ModelViewSet):
     lookup_field = 'id'
