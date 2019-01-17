@@ -18,7 +18,3 @@ ALLOWED_HOSTS = ['*']
 # Turn off DEBUG mode.
 DEBUG = False
 
-# Cloud Mongodb
-mongoengine.connect(
-    host='mongodb+srv://dbuser:Passw0rd@cluster0-qadtf.mongodb.net/news_analysis_chatbot?retryWrites=true'
-)
