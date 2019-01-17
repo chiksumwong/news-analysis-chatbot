@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from rest_framework_mongoengine import routers as merouters
 
-from .views_web import NewsViewSet
+from chatbot.views import NewsViewSet
 from chatbot import views
 
 merouter = merouters.DefaultRouter()
