@@ -15,3 +15,6 @@ $ python manage.py runserver
 | ------ | ------ |
 | GET | http://127.0.0.1:8000/api/news/ |
 | POST | http://127.0.0.1:8000/api/news/ |
+| POST | http://127.0.0.1:8000/api/info/ |
+| POST | http://127.0.0.1:8000/api/checknews/ |
+| POST | http://127.0.0.1:8000/api/checknewsbyurl/ |

@@ -8,7 +8,9 @@ merouter = merouters.DefaultRouter()
 merouter.register(r'news', NewsViewSet)
  
 urlpatterns = [
-    path('checknews/', FakeNewsDector.check_news)
+    path('checknews/', FakeNewsDector.check_news),
+    path('checknewsbyurl/', FakeNewsDector.check_news_by_url),
+    path('info/', FakeNewsDector.get_news_info),
 ]
  
 urlpatterns += merouter.urls
