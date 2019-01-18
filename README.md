@@ -2,7 +2,10 @@
 # news-analysis-chatbot
 
 # Start Server
+```sh
 $ python manage.py runserver
+```
+
 
 # url
 ### Chatbot
@@ -18,3 +21,8 @@ $ python manage.py runserver
 | POST | http://127.0.0.1:8000/api/info/ |
 | POST | http://127.0.0.1:8000/api/checknews/ |
 | POST | http://127.0.0.1:8000/api/checknewsbyurl/ |
+
+# requirements
+```sh
+$ pip freeze > requirements.txt
+```
