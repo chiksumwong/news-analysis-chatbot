@@ -85,3 +85,4 @@ warcio==1.6.3
 wincertstore==0.2
 wrapt==1.10.11
 zope.interface==4.6.0
+django-cors-headers==2.4.0
