@@ -71,8 +71,8 @@ def detect_fake_news(text):
     return output
 
 # Keywork Reply
-def keywork_reply(received_text):
-    if received_text =='news:':
+# def keywork_reply(received_text):
+#     if received_text =='news:':
 
 
-    return 'bad'
+#     return 'bad'
