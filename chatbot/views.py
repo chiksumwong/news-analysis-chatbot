@@ -69,3 +69,7 @@ def detect_fake_news(text):
 
     output = "The news is " + str(prediction[0]) + ", The fake news probability is " + str(probability[0][0]) +"."
     return output
+
+# Keywork Reply
+def keywork_reply(received_text):
+    return 'bad'

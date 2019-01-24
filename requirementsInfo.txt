@@ -23,3 +23,6 @@ scipy==1.1.0
 
 # news please
 news-please==1.2.50
+
+# fix heroku deploy problem
+psycopg2-binary==2.7.7
