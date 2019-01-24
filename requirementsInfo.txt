@@ -1,12 +1,25 @@
+# Deploy to heroku
 gunicorn==19.9.0
 django-heroku==0.3.1
+
+# django
 Django==2.1.5
 djangorestframework==3.9.0
+
+# django mongodb
 django-rest-framework-mongoengine==3.3.1
 mongoengine==0.16.3
+
+# django cors
 django-cors-headers==2.4.0
+
+# line chatbot
 line-bot-sdk==1.8.0
+
+# fake news detection
 scikit-learn==0.20.2
 numpy==1.15.4
 scipy==1.1.0
+
+# news please
 news-please==1.2.50

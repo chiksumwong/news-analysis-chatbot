@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 import mongoengine
+import django_heroku
 
 # def get_env_variable(var_name):
 #     try:
@@ -173,3 +174,6 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
     'localhost:8080',
 )
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
