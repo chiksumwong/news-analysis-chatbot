@@ -1,6 +1,7 @@
 # Deploy to heroku
 gunicorn==19.9.0
 django-heroku==0.3.1
+dj-static==0.0.6
 
 # django
 Django==2.1.5
