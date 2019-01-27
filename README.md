@@ -26,3 +26,8 @@ $ python manage.py runserver
 ```sh
 $ pip freeze > requirements.txt
 ```
+
+# All functions of data preprocessing 
+```sh
+$ python train_model/DataPreprocessFunctions.py
+```
