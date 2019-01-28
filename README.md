@@ -29,5 +29,18 @@ $ pip freeze > requirements.txt
 
 # All functions of data preprocessing 
 ```sh
-$ python train_model/DataPreprocessFunctions.py
+$ python model_training/DataPreprocess.py
+
+```
+
+# All functions of feature extraction and selection
+```sh
+$ python model_training/FeatureSelection.py
+
+```
+
+# Model training
+```sh
+$ python model_training/Classifiers.py
+
 ```
