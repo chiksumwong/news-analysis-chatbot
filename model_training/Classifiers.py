@@ -9,12 +9,14 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import pickle
 
-#building classifier using naive bayes 
-nb_pipeline = Pipeline([
-        ('NBCV',FeatureSelection.countV),
-        ('nb_clf',MultinomialNB())])
+from sklearn.pipeline import Pipeline
+from sklearn.naive_bayes import MultinomialNB    # using Naive Bayes's "MultinoialNB", classifier, to classify text
 
+
+#building classifier using naive bayes 
+nb_pipeline = Pipeline([('NBCV',FeatureSelection.countV),('nb_clf',MultinomialNB())])
 nb_pipeline.fit(DataPreprocess.train_news['Statement'],DataPreprocess.train_news['Label'])
+
 predicted_nb = nb_pipeline.predict(DataPreprocess.test_news['Statement'])
 np.mean(predicted_nb == DataPreprocess.test_news['Label'])
 
