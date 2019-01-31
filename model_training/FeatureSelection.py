@@ -24,3 +24,5 @@ train_count = countV.fit_transform(DataPreprocess.train_news['Statement'].values
 print(countV)
 print(train_count)
 
+# n-grams
+tfidf_ngram = TfidfVectorizer(stop_words='english',ngram_range=(1,4),use_idf=True,smooth_idf=True)

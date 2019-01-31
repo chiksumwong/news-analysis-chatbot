@@ -12,41 +12,20 @@ import pickle
 from sklearn.pipeline import Pipeline
 from sklearn.naive_bayes import MultinomialNB    # using Naive Bayes's "MultinoialNB", classifier, to classify text
 
+from sklearn.cross_validation import KFold       # avoid 'Overfitting'
 
-#building classifier using naive bayes 
-nb_pipeline = Pipeline([('NBCV',FeatureSelection.countV),('nb_clf',MultinomialNB())])
-nb_pipeline.fit(DataPreprocess.train_news['Statement'],DataPreprocess.train_news['Label'])
+from sklearn.metrics import confusion_matrix, f1_score, classification_report
 
-predicted_nb = nb_pipeline.predict(DataPreprocess.test_news['Statement'])
-np.mean(predicted_nb == DataPreprocess.test_news['Label'])
+#logistic regression classifier
+logR_pipeline_ngram = Pipeline([
+        ('LogR_tfidf',FeatureSelection.tfidf_ngram),
+        ('LogR_clf',LogisticRegression(penalty="l2",C=1))
+        ])
 
-#User defined functon for K-Fold cross validatoin
-def build_confusion_matrix(classifier):
-    
-    k_fold = KFold(n=len(DataPreprocess.train_news), n_folds=5)
-    scores = []
-    confusion = np.array([[0,0],[0,0]])
+logR_pipeline_ngram.fit(DataPrep.train_news['Statement'],DataPrep.train_news['Label'])
+predicted_LogR_ngram = logR_pipeline_ngram.predict(DataPrep.test_news['Statement'])
+np.mean(predicted_LogR_ngram == DataPrep.test_news['Label'])
 
-    for train_ind, test_ind in k_fold:
-        train_text = DataPreprocess.train_news.iloc[train_ind]['Statement'] 
-        train_y = DataPreprocess.train_news.iloc[train_ind]['Label']
-    
-        test_text = DataPreprocess.train_news.iloc[test_ind]['Statement']
-        test_y = DataPreprocess.train_news.iloc[test_ind]['Label']
-        
-        classifier.fit(train_text,train_y)
-        predictions = classifier.predict(test_text)
-        
-        confusion += confusion_matrix(test_y,predictions)
-        score = f1_score(test_y,predictions)
-        scores.append(score)
-    
-    return (print('Total statements classified:', len(DataPreprocess.train_news)),
-    print('Score:', sum(scores)/len(scores)),
-    print('score length', len(scores)),
-    print('Confusion matrix:'),
-    print(confusion))
-
-
-#K-fold cross validation for all classifiers
-build_confusion_matrix(nb_pipeline)
+#saving best model to the disk
+model_file = 'final_model.sav'
+pickle.dump(logR_pipeline_ngram,open(model_file,'wb'))
