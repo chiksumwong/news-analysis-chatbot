@@ -1,7 +1,7 @@
 """
 Naive-bayes, Logistic Regression, Linear SVM, SVM Stochastic gradient decent and Random forest classifiers 
 """
-import DataPreprocessrocess
+import DataPreprocess
 import FeatureSelection
 
 import numpy as np
@@ -22,9 +22,9 @@ logR_pipeline_ngram = Pipeline([
         ('LogR_clf',LogisticRegression(penalty="l2",C=1))
         ])
 
-logR_pipeline_ngram.fit(DataPrep.train_news['Statement'],DataPrep.train_news['Label'])
-predicted_LogR_ngram = logR_pipeline_ngram.predict(DataPrep.test_news['Statement'])
-np.mean(predicted_LogR_ngram == DataPrep.test_news['Label'])
+logR_pipeline_ngram.fit(DataPreprocess.train_news['Statement'],DataPreprocess.train_news['Label'])
+predicted_LogR_ngram = logR_pipeline_ngram.predict(DataPreprocess.test_news['Statement'])
+np.mean(predicted_LogR_ngram == DataPreprocess.test_news['Label'])
 
 #saving best model to the disk
 model_file = 'final_model.sav'
