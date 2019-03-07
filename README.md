@@ -43,3 +43,8 @@ $ python model_training/TestModel.py
 ```sh
 $ pip freeze > requirements.txt
 ```
+
+## Install package by using requirements.txt
+```sh
+$ pip install -r requirements.txt
+```
