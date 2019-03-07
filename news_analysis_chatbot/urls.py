@@ -12,5 +12,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^$', views.home),
     url(r'^chatbot/', include('chatbot.urls')),
-    # url(r'^api/', include('news.urls')),
+    url(r'^api/', include('news.urls')),
 ]
