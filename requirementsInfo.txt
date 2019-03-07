@@ -1,29 +1,29 @@
 # Deploy to heroku
-gunicorn==19.9.0
-django-heroku==0.3.1
-dj-static==0.0.6
+gunicorn
+django-heroku
+dj-static
 
 # django
-Django==2.1.5
-djangorestframework==3.9.0
+Django
+djangorestframework
 
 # django mongodb
-django-rest-framework-mongoengine==3.3.1
-mongoengine==0.16.3
+django-rest-framework-mongoengine
+mongoengine
 
 # django cors
-django-cors-headers==2.4.0
+django-cors-headers
 
 # line chatbot
-line-bot-sdk==1.8.0
+line-bot-sdk
 
 # fake news detection
-scikit-learn==0.20.2
-numpy==1.15.4
-scipy==1.1.0
+scikit-learn
+numpy
+scipy
 
 # news please
-news-please==1.2.50
+news-please
 
 # fix heroku deploy problem
-psycopg2-binary==2.7.7
+psycopg2-binary
