@@ -7,6 +7,8 @@ from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
+from newsplease import NewsPlease
+
 import pickle
 
 
@@ -53,7 +55,7 @@ def webhook(request):
     else:
         return HttpResponseBadRequest()
 
-        
+
 # Reply to Line
 def reply_to_line(reply_token, reply_text):
     if reply_text == None:
@@ -67,7 +69,7 @@ def reply_to_line(reply_token, reply_text):
 
 # Detect the fake news
 def detect_fake_news(text):
-    load_model = pickle.load(open(os.path.join(settings.BASE_DIR, 'model_training/trained_model/final_model.sav'), 'rb'))
+    load_model = pickle.load(open(os.path.join(settings.BASE_DIR, 'model_training/model.sav'), 'rb'))
     prediction = load_model.predict([text])
     probability = load_model.predict_proba([text])
 
@@ -81,7 +83,7 @@ def detect_fake_news_by_url(inputUrl):
         inputNews = article.text
 
         # find the news whether is fake   
-        load_model = pickle.load(open(os.path.join(settings.BASE_DIR, 'model_training/trained_model/final_model.sav'), 'rb'))
+        load_model = pickle.load(open(os.path.join(settings.BASE_DIR, 'model_training/model.sav'), 'rb'))
         prediction = load_model.predict([inputNews])
         probability = load_model.predict_proba([inputNews])
         output = "The news is " + str(prediction[0]) + ", The fake news probability is " + str(probability[0][0]) +"."
