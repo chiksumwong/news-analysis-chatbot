@@ -37,8 +37,12 @@ def webhook(request):
         for event in events:
             # Make sure the even is 'Message Event'
             if isinstance(event, MessageEvent):
+                print('event form line', event)
                 # Make sure the message is 'Text Message'
                 if isinstance(event.message, TextMessage):
+                    # detect the fake news
+                    # reply_text = detect_fake_news(event.message.text)
+                    # detect the fake news by url
                     reply_text = detect_fake_news(event.message.text)
                     # Reply to Line
                     reply_to_line(event.reply_token, reply_text)
@@ -49,7 +53,7 @@ def webhook(request):
     else:
         return HttpResponseBadRequest()
 
-
+        
 # Reply to Line
 def reply_to_line(reply_token, reply_text):
     if reply_text == None:
@@ -63,16 +67,22 @@ def reply_to_line(reply_token, reply_text):
 
 # Detect the fake news
 def detect_fake_news(text):
-    load_model = pickle.load(open(os.path.join(settings.BASE_DIR, 'fake_news_detection_model/final_model.sav'), 'rb'))
+    load_model = pickle.load(open(os.path.join(settings.BASE_DIR, 'model_training/trained_model/final_model.sav'), 'rb'))
     prediction = load_model.predict([text])
     probability = load_model.predict_proba([text])
 
     output = "The news is " + str(prediction[0]) + ", The fake news probability is " + str(probability[0][0]) +"."
     return output
 
-# Keywork Reply
-# def keywork_reply(received_text):
-#     if received_text =='news:':
+# Detect the fake news
+def detect_fake_news_by_url(inputUrl):
+        # get the news text from given url
+        article = NewsPlease.from_url(inputUrl)
+        inputNews = article.text
 
-
-#     return 'bad'
+        # find the news whether is fake   
+        load_model = pickle.load(open(os.path.join(settings.BASE_DIR, 'model_training/trained_model/final_model.sav'), 'rb'))
+        prediction = load_model.predict([inputNews])
+        probability = load_model.predict_proba([inputNews])
+        output = "The news is " + str(prediction[0]) + ", The fake news probability is " + str(probability[0][0]) +"."
+    return output

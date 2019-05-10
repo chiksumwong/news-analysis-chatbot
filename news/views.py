@@ -31,7 +31,7 @@ class FakeNewsDector:
         inputNews = body['text']
 
         # find the news whether is fake   
-        load_model = pickle.load(open(os.path.join(settings.BASE_DIR, 'fake_news_detection_model/final_model.sav'), 'rb'))
+        load_model = pickle.load(open(os.path.join(settings.BASE_DIR, 'model_training/trained_model/final_model.sav'), 'rb'))
         prediction = load_model.predict([inputNews])
         probability = load_model.predict_proba([inputNews])
         output = "The news is " + str(prediction[0]) + ", The fake news probability is " + str(probability[0][0]) +"."
@@ -70,7 +70,7 @@ class FakeNewsDector:
         inputNews = article.text
 
         # find the news whether is fake   
-        load_model = pickle.load(open(os.path.join(settings.BASE_DIR, 'fake_news_detection_model/final_model.sav'), 'rb'))
+        load_model = pickle.load(open(os.path.join(settings.BASE_DIR, 'model_training/trained_model/final_model.sav'), 'rb'))
         prediction = load_model.predict([inputNews])
         probability = load_model.predict_proba([inputNews])
         output = "The news is " + str(prediction[0]) + ", The fake news probability is " + str(probability[0][0]) +"."
