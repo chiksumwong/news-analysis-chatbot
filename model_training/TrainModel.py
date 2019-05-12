@@ -14,6 +14,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 # For Model Training
 from sklearn.pipeline import Pipeline
 # Classifier Algorithm
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.linear_model import  LogisticRegression
 from sklearn.svm import LinearSVC
 # for get the probability 
 from sklearn.calibration import CalibratedClassifierCV
@@ -21,6 +23,7 @@ from sklearn.calibration import CalibratedClassifierCV
 # Model Evaluation
 from sklearn.model_selection import train_test_split  
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+
 
 def model_training():
     data_file_path = 'model_training/data.csv'
@@ -57,24 +60,57 @@ def model_training():
 	# Feature Selection
     tfidfconverter = TfidfVectorizer(stop_words=stopwords.words('english'),ngram_range=(1,4),use_idf=True,smooth_idf=True)
 
-    X_train, X_test, y_train, y_test = train_test_split(documents, data['Label'], test_size=0.2, random_state=97)  
+    X_train, X_test, y_train, y_test = train_test_split(documents, data['Label'], test_size=0.2)  
 
-	#logistic regression classifier
+    # # Naive-Bayes Classifier
+    # nb_pipeline_ngram = Pipeline([
+    #         ('nb_tfidf',tfidfconverter),
+    #         ('nb_clf',MultinomialNB())])
+
+    # # Train model
+    # nb_pipeline_ngram.fit(X_train,y_train)
+
+    # # Model Evaluation
+    # y_pred = nb_pipeline_ngram.predict(X_test)
+    # print('')
+    # print('Naive-Bayes Classifier')
+    # print('Confusion Matrix: \n',confusion_matrix(y_test,y_pred))  
+    # print('Classification Report: \n',classification_report(y_test,y_pred))  
+    # print('Accuracy: ', accuracy_score(y_test,y_pred))  
+    # print('')
+
+	# # logistic Regression Classifier
+    # logR_pipeline_ngram = Pipeline([
+    #         ('LogR_tfidf',tfidfconverter),
+    #         ('LogR_clf',LogisticRegression(solver='liblinear',penalty="l2",C=1))
+    #         ])
+
+    # logR_pipeline_ngram.fit(X_train,y_train)
+
+    # # evaluation(logR_pipeline_ngram)
+    # y_pred = logR_pipeline_ngram.predict(X_test)
+    # print('logistic Regression Classifier')                                                              
+    # print('Confusion Matrix: \n',confusion_matrix(y_test,y_pred))  
+    # print('Classification Report: \n',classification_report(y_test,y_pred))  
+    # print('Accuracy: ', accuracy_score(y_test,y_pred))  
+    # print('')
+
     svm_pipeline_ngram = Pipeline([
         ('svm_tfidf',tfidfconverter),
         ('svm_clf',CalibratedClassifierCV(base_estimator= LinearSVC(penalty='l2', dual=False), cv=5))
         ])
 
     svm_pipeline_ngram.fit(X_train, y_train)
-
     # Model Evaluation
-    y_pred = svm_pipeline_ngram.predict(X_test)                                                                   
-    print(confusion_matrix(y_test,y_pred))  
-    print(classification_report(y_test,y_pred))  
-    print(accuracy_score(y_test, y_pred))  
+    y_pred = svm_pipeline_ngram.predict(X_test)     
+    print('SVM Classifier')                                                              
+    print('Confusion Matrix: \n',confusion_matrix(y_test,y_pred))  
+    print('Classification Report: \n',classification_report(y_test,y_pred))  
+    print('Accuracy: ', accuracy_score(y_test,y_pred))  
+    print('')
 
 	#saving best model to the disk
-    pickle.dump(svm_pipeline_ngram,open('model.sav','wb'))
+    pickle.dump(svm_pipeline_ngram,open('model_training/model.sav','wb'))
 
 if __name__ == '__main__':
     model_training()

@@ -7,7 +7,7 @@ print("You entered: " + str(var))
 #function to run for prediction
 def detecting_fake_news(var):    
 #retrieving the best model for prediction call
-    load_model = pickle.load(open('model.sav', 'rb'))
+    load_model = pickle.load(open('model_training/model.sav', 'rb'))
     prediction = load_model.predict([var])
     prob = load_model.predict_proba([var])
 
