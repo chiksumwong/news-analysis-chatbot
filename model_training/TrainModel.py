@@ -18,34 +18,21 @@ from sklearn.svm import LinearSVC
 # for get the probability 
 from sklearn.calibration import CalibratedClassifierCV
 
-
 # Model Evaluation
+from sklearn.model_selection import train_test_split  
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 
-
-train_file_path = 'model_training/dataset/train.csv'
-test_filename_path = 'model_training/dataset/test.csv'
-train = pd.read_csv(train_file_path)
-test = pd.read_csv(test_filename_path)
-
-
-def evaluation(classifier):
-    test_text = test['Statement']
-    test_y = test['Label']
-    predictions = classifier.predict(test_text)
-    print('Confusion Matrix: \n',confusion_matrix(test_y,predictions))  
-    print('Classification Report: \n',classification_report(test_y,predictions))  
-    print('Accuracy: ', accuracy_score(test_y, predictions))  
-
-
 def model_training():
+    data_file_path = 'model_training/data.csv'
+    data = pd.read_csv(data_file_path)
+
     # Data Cleaning and Lemmatization
     documents = []
     stemmer = WordNetLemmatizer()
 
-    for sen in range(0, len(train['Statement'])):  
+    for sen in range(0, len(data['Statement'])):  
         # Remove all the special characters, eg(#, $, %, ...)
-        document = re.sub(r'\W', ' ', str(train['Statement'][sen]))
+        document = re.sub(r'\W', ' ', str(data['Statement'][sen]))
 
         # remove all single characters, eg( Sam's, it will get "Sam", "s",which has no meaning, remvoe it)
         document = re.sub(r'\s+[a-zA-Z]\s+', ' ', document)
@@ -70,15 +57,21 @@ def model_training():
 	# Feature Selection
     tfidfconverter = TfidfVectorizer(stop_words=stopwords.words('english'),ngram_range=(1,4),use_idf=True,smooth_idf=True)
 
+    X_train, X_test, y_train, y_test = train_test_split(documents, data['Label'], test_size=0.2, random_state=97)  
+
 	#logistic regression classifier
     svm_pipeline_ngram = Pipeline([
         ('svm_tfidf',tfidfconverter),
         ('svm_clf',CalibratedClassifierCV(base_estimator= LinearSVC(penalty='l2', dual=False), cv=5))
         ])
 
-    svm_pipeline_ngram.fit(documents,train['Label'])
+    svm_pipeline_ngram.fit(X_train, y_train)
 
-    evaluation(svm_pipeline_ngram)
+    # Model Evaluation
+    y_pred = svm_pipeline_ngram.predict(X_test)                                                                   
+    print(confusion_matrix(y_test,y_pred))  
+    print(classification_report(y_test,y_pred))  
+    print(accuracy_score(y_test, y_pred))  
 
 	#saving best model to the disk
     pickle.dump(svm_pipeline_ngram,open('model.sav','wb'))
