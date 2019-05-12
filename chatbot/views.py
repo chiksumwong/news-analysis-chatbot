@@ -78,13 +78,13 @@ def detect_fake_news(text):
 
 # Detect the fake news
 def detect_fake_news_by_url(inputUrl):
-        # get the news text from given url
-        article = NewsPlease.from_url(inputUrl)
-        inputNews = article.text
+    # get the news text from given url
+    article = NewsPlease.from_url(inputUrl)
+    inputNews = article.text
 
-        # find the news whether is fake   
-        load_model = pickle.load(open(os.path.join(settings.BASE_DIR, 'model_training/model.sav'), 'rb'))
-        prediction = load_model.predict([inputNews])
-        probability = load_model.predict_proba([inputNews])
-        output = "The news is " + str(prediction[0]) + ", The fake news probability is " + str(probability[0][0]) +"."
+    # find the news whether is fake   
+    load_model = pickle.load(open(os.path.join(settings.BASE_DIR, 'model_training/model.sav'), 'rb'))
+    prediction = load_model.predict([inputNews])
+    probability = load_model.predict_proba([inputNews])
+    output = "The news is " + str(prediction[0]) + ", The fake news probability is " + str(probability[0][0]) +"."
     return output
