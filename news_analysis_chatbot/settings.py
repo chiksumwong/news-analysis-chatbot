@@ -53,17 +53,23 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    # Django Apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Third-Party Apps
     'corsheaders',
     'rest_framework',
     'rest_framework_mongoengine',
+
+    # Local Apps
     'chatbot',
     'news',
+    'account'
 ]
 
 MIDDLEWARE = [
@@ -108,16 +114,16 @@ DATABASES = {
     # }
 }
 
-# # Cloud Mongodb
-# mongoengine.connect(
-#     host='mongodb+srv://dbuser:Passw0rd@cluster0-qadtf.mongodb.net/news_analysis_chatbot?retryWrites=true'
-# )
+# Cloud Mongodb
+mongoengine.connect(
+    host='mongodb+srv://dbuser:Passw0rd@cluster0-qadtf.mongodb.net/news_analysis_chatbot?retryWrites=true'
+)
 
 # Local Host
-mongoengine.connect(
-    db="news_analysis_chatbots",
-    host="localhost"
-)
+# mongoengine.connect(
+#     db="news_analysis_chatbots",
+#     host="localhost"
+# )
 
 
 # Password validation
