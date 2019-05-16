@@ -1,9 +1,10 @@
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.conf import settings
 
-# Create your views here.
-from rest_framework_mongoengine import viewsets as meviewsets
+from rest_framework.parsers import JSONParser
+from rest_framework.views import APIView
+
 from news.serializers import NewsSerializer
 from news.models import News
 
@@ -13,10 +14,10 @@ import os
 import pickle
 import json
 
-class NewsViewSet(meviewsets.ModelViewSet):
-    lookup_field = 'id'
-    queryset = News.objects.all()
-    serializer_class = NewsSerializer
+# class NewsViewSet(meviewsets.ModelViewSet):
+#     lookup_field = 'id'
+#     queryset = News.objects.all()
+#     serializer_class = NewsSerializer
 
 
 class FakeNewsDector:
@@ -38,23 +39,6 @@ class FakeNewsDector:
 
         # output the result
         return HttpResponse(output, status=200)
-
-    """
-    Post, get the all news information by given url
-    """
-    @csrf_exempt
-    def get_news_info(request):
-        # get the input news url
-        body = json.loads(request.body.decode('utf-8'))
-        inputNews = body['url']
-
-        # find the news textual
-        article = NewsPlease.from_url(inputNews)
-        output = article.text
-
-        # output the result
-        return HttpResponse(output, status=200)
-
 
     """
     Post, get input news then output the result of news
@@ -101,6 +85,11 @@ class NewsInfo:
         "url": "https://www.rt.com/news/203203-ukraine-russia-troops-border/"
     }
     """
+
+
+    """
+    Post, get the all news information by given url
+    """
     @csrf_exempt
     def get_news_info_from_url(request):
         # get the input news url
@@ -109,24 +98,27 @@ class NewsInfo:
 
         # find the news textual
         article = NewsPlease.from_url(inputNews)
-        authors = article.authors
-        date_publish = article.date_publish
+        authors = article.authors # list format
+        date_publish = article.date_publish # date time format
+        
+        # following are string
         source_domain = article.source_domain
         url = article.url
         title = article.title
         text = article.text
 
         # toJson
-        output = Object()
-        output.authors = authors
-        output.date_publish = date_publish
-        output.source_domain = source_domain
-        output.url = url
-        output.title = title
-        output.text = text
+        # output = Object()
+        # output.authors = authors
+        # output.date_publish = date_publish
+        # output.source_domain = source_domain
+        # output.url = url
+        # output.title = title
+        # output.text = text
 
         # output the result
-        return HttpResponse(output.toJSON(), status=200)
+        # return HttpResponse(output.toJSON(), status=200)
+        return HttpResponse("The news Info are: " + title, status=200)
 
 class Object:
     def toJSON(self):

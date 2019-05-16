@@ -1,8 +1,3 @@
 # Byte-compiled / optimized / DLL files
 *.pyc
 __pycache__
-
-#Database
-*.sqlite3
-
-staticfiles
