@@ -47,7 +47,7 @@ def webhook(request):
                     # detect the fake news by url
 
                     print(event.message.text)
-                    reply_text = detect_fake_news(event.message.text)
+                    reply_text = detect_fake_news_by_url(event.message.text)
                     
                     # Reply to Line
                     reply_to_line(event.reply_token, reply_text)
@@ -84,7 +84,7 @@ def detect_fake_news_by_url(inputUrl):
     # get the news text from given url
     article = NewsPlease.from_url(inputUrl)
     inputNews = article.text
-
+    print("Input Text: " + inputNews)
     # find the news whether is fake   
     load_model = pickle.load(open(os.path.join(settings.BASE_DIR, 'model_training/model.sav'), 'rb'))
     prediction = load_model.predict([inputNews])

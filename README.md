@@ -48,3 +48,14 @@ $ pip freeze > requirements.txt
 ```sh
 $ pip install -r requirements.txt
 ```
+## Heroku View Log
+$ heroku login
+
+$ heroku logs -t -a news-analysis-chatbot
+
+## True news websites:
+- https://www.nytimes.com/2019/01/18/opinion/sunday/cuba-healthcare-medicare.html?action=click&module=Opinion&pgtype=Homepage
+
+
+## Fake news websites:
+- https://newspunch.com/ag-barr-mocks-pelosi-madam-speaker-bring-handcuffs/
