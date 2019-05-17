@@ -68,8 +68,8 @@ def reply_to_line(reply_token, user_id, reply_text):
         return None
 
     button_template_message = ButtonsTemplate(
-        title = reply_text,
-        text = "What do you think about the news you request?",
+        title = "News is true or false?",
+        text = reply_text,
         actions=[
             MessageTemplateAction(
                 label='True', text='TrueNews'
