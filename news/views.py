@@ -1,10 +1,8 @@
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.conf import settings
 
-from rest_framework.parsers import JSONParser
-from rest_framework.views import APIView
-
+from rest_framework import viewsets
 from news.serializers import NewsSerializer
 from news.models import News
 
@@ -14,10 +12,10 @@ import os
 import pickle
 import json
 
-# class NewsViewSet(meviewsets.ModelViewSet):
-#     lookup_field = 'id'
-#     queryset = News.objects.all()
-#     serializer_class = NewsSerializer
+class NewsViewSet(viewsets.ModelViewSet):
+    lookup_field = 'id'
+    queryset = News.objects.all()
+    serializer_class = NewsSerializer
 
 
 class FakeNewsDector:

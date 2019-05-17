@@ -40,21 +40,27 @@ def webhook(request):
             # Make sure the even is 'Message Event'
             if isinstance(event, MessageEvent):
                 print('event form line', event)
+
                 # Make sure the message is 'Text Message'
                 if isinstance(event.message, TextMessage):
-
-                    if event.message.text.startswith('http'):
+                    if event.message.text.startswith('TrueNews'):
+                        reply_text = "Thank You!"
+                        v_response(event.reply_token, reply_text)
+                    elif event.message.text.startswith('FakeNews'):
+                        reply_text = "Thank You!"
+                        v_response(event.reply_token, reply_text)
+                    elif event.message.text.startswith('http'):
                         # detect the fake news by url
                         print(event.message.text)
                         reply_text = detect_fake_news_by_url(event.message.text)
+                        # Reply to Line
+                        reply_to_line(event.reply_token, event.source.user_id, reply_text)
                     else:
                         # detect the fake news
                         print(event.message.text)
                         reply_text = detect_fake_news(event.message.text)
-
-                    # Reply to Line
-                    reply_to_line(event.reply_token, event.source.user_id, reply_text)
-
+                        # Reply to Line
+                        reply_to_line(event.reply_token, event.source.user_id, reply_text)
 
         # Response 200
         return HttpResponse(reply_text, status=200)
@@ -86,6 +92,11 @@ def reply_to_line(reply_token, user_id, reply_text):
         # error handle
         raise e
 
+# Reply to Line
+def v_response(reply_token, reply_text):
+    if reply_text == None:
+        return None
+    line_bot_api.reply_message(reply_token, TextSendMessage(text=reply_text))
 
 # Detect the fake news
 def detect_fake_news(text):
@@ -93,7 +104,7 @@ def detect_fake_news(text):
     prediction = load_model.predict([text])
     probability = load_model.predict_proba([text])
 
-    output = "Result" + str(prediction[0]) + ", Fake news probability:" + str('%.2f' % probability[0][0])
+    output = "News is " + str(prediction[0]) + ", Fake news probability is " + str('%.2f' % probability[0][0])
     return output
 
 # Detect the fake news
@@ -106,5 +117,5 @@ def detect_fake_news_by_url(inputUrl):
     load_model = pickle.load(open(os.path.join(settings.BASE_DIR, 'model_training/model.sav'), 'rb'))
     prediction = load_model.predict([inputNews])
     probability = load_model.predict_proba([inputNews])
-    output = "Result" + str(prediction[0]) + ", Fake news probability:" + str('%.2f' % probability[0][0])
+    output = "News is " + str(prediction[0]) + ", Fake news probability is " + str('%.2f' % probability[0][0])
     return output
