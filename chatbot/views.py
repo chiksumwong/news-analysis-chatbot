@@ -67,9 +67,32 @@ def reply_to_line(reply_token, reply_text):
     if reply_text == None:
         return None
 
+    outputText = reply_text + " What do you think about the news you request?"
+
+    message = {
+        "type":"template",
+        "altText":"news analysis result return",
+        "template": {
+            "type": "button",
+            "text": outputText,
+            "action":[
+                {
+                    "type":"message",
+                    "label": "True",
+                    "text": "1"
+                },{
+                    "type":"message",
+                    "label": "False",
+                    "text": "2"
+                }
+            ]
+        }
+    }
+
     line_bot_api.reply_message(
         reply_token,
-        TextSendMessage(text=reply_text)
+        message
+        # TextSendMessage(text=reply_text)
     )
 
 
