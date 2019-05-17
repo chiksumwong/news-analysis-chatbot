@@ -52,6 +52,9 @@ $ heroku logs -t -a news-analysis-chatbot
 ## Chatbot
 <p>
 <kbd>
-<img src='static/screenshot/LINE.jpg' width="200" alt='LINE'>
+<img src='static/screenshot/LINE_TEXT.jpg' width="200" alt='LINE'>
+</kbd>
+<kbd>
+<img src='static/screenshot/LINE_URL.jpg' width="200" alt='LINE'>
 </kbd>
 </p>
