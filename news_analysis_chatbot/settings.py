@@ -153,3 +153,6 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:8080',
 ]
     
+import django_heroku
+# Activate Django-Heroku.
+django_heroku.settings(locals())

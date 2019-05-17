@@ -46,8 +46,8 @@ def webhook(request):
                     # reply_text = detect_fake_news(event.message.text)
                     # detect the fake news by url
 
-                    # reply_text = detect_fake_news(event.message.text)
-                    reply_text = detect_fake_news_by_url(event.message.text)
+                    print(event.message.text)
+                    reply_text = detect_fake_news(event.message.text)
                     
                     # Reply to Line
                     reply_to_line(event.reply_token, reply_text)
