@@ -2,8 +2,9 @@ from django.db import models
 
 class News(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    title = models.CharField(max_length=100, blank=True, default='')
+    last_modify_date = models.DateTimeField(auto_now=True)
+    title = models.TextField()
     body = models.TextField()
 
     class Meta:
-        ordering = ('created',)
+        db_table = "news"
