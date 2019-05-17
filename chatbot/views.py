@@ -82,11 +82,8 @@ def reply_to_line(reply_token, user_id, reply_text):
 
     line_bot_api = LineBotApi(reply_token)
     
-    try:
-        line_bot_api.push_message('U006caac285cefa6edcada787f4f41c25', TemplateSendMessage(alt_text="Please Use in Phone", template=button_template_message))
-    except LineBotApiError as e:
-        # error handle
-        raise e
+    line_bot_api.push_message(user_id, TemplateSendMessage(alt_text="Please Use in Phone", template=button_template_message))
+
 
 
 # Detect the fake news
