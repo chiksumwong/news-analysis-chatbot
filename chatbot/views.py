@@ -52,10 +52,8 @@ def webhook(request):
                         print(event.message.text)
                         reply_text = detect_fake_news(event.message.text)
 
-                    print("user id: "+ event.source.userId)
-                    userId = event.source.userId
                     # Reply to Line
-                    reply_to_line(event.reply_token, userId, reply_text)
+                    reply_to_line(event.reply_token, event.source.user_id, reply_text)
 
 
         # Response 200
@@ -65,7 +63,7 @@ def webhook(request):
 
 
 # Reply to Line
-def reply_to_line(reply_token, userId, reply_text):
+def reply_to_line(reply_token, user_id, reply_text):
     if reply_text == None:
         return None
 
@@ -82,12 +80,10 @@ def reply_to_line(reply_token, userId, reply_text):
         ]
     )
 
-    print("user id: " + userId)
-
     line_bot_api = LineBotApi(reply_token)
     
     try:
-        line_bot_api.push_message(userId, TemplateSendMessage(alt_text="Please Use in Phone", template=button_template_message))
+        line_bot_api.push_message(user_id, TemplateSendMessage(alt_text="Please Use in Phone", template=button_template_message))
     except LineBotApiError as e:
         # error handle
         raise e
