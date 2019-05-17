@@ -1,7 +1,9 @@
-from rest_framework_mongoengine import serializers
+from rest_framework import serializers
+
 from news.models import News
- 
-class NewsSerializer(serializers.DocumentSerializer):
+
+
+class NewsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = News
-        fields = '__all__'
+            model = News
+            fields = '__all__'

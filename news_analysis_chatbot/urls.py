@@ -1,16 +1,19 @@
 from django.contrib import admin
 from django.urls import path
-
 from django.conf.urls import url, include
 
-from news_analysis_chatbot import views
+from rest_framework.routers import DefaultRouter
+from news import views
+
 import chatbot
 import news
 
+router = DefaultRouter()
+router.register(r'news', views.NewsViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^$', views.home),
     url(r'^chatbot/', include('chatbot.urls')),
     url(r'^api/', include('news.urls')),
+    url(r'^api/', include(router.urls))
 ]
