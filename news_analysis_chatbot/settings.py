@@ -13,8 +13,12 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 
 # Line Message API
-LINE_CHANNEL_SECRET = '979627ceddbe834054c388c19f908b7f'
-LINE_CHANNEL_ACCESS_TOKEN = 'Ij1FUOCJYNTxxQAaFLZC2ev3vXgyRxab3pwhEjjOJD5QvtugSgOkFETDZi/nJoce7/jG/3mZVBFY5g6LJxprBdJHPEZMqVUKahDtFVBl8xkzgF7Ht8D8XIaJcKB1BsMsRlCCJ45RWGNoi496B0MtfgdB04t89/1O/w1cDnyilFU='
+# LINE_CHANNEL_SECRET = '979627ceddbe834054c388c19f908b7f'
+# LINE_CHANNEL_ACCESS_TOKEN = 'Ij1FUOCJYNTxxQAaFLZC2ev3vXgyRxab3pwhEjjOJD5QvtugSgOkFETDZi/nJoce7/jG/3mZVBFY5g6LJxprBdJHPEZMqVUKahDtFVBl8xkzgF7Ht8D8XIaJcKB1BsMsRlCCJ45RWGNoi496B0MtfgdB04t89/1O/w1cDnyilFU='
+LINE_CHANNEL_SECRET = 'd0879dc88ae6a1df6e094125bf35e954'
+LINE_CHANNEL_ACCESS_TOKEN = 'EKkOL15VVHoxSfnyczwGnoIXGEgCJTZD7zHX+VUWhNzs3JRnkOZpHARNGocSp/+5q6mnl3M8rdRz0xSOaTirx/p25XVqZ9Y8Kn3t3sOZzKljEClnTFHvWFcJHypJIBArEUl+Rm6WE8yUP7QX18ed0gdB04t89/1O/w1cDnyilFU='
+
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
