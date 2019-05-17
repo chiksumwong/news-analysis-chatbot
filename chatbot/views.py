@@ -39,14 +39,14 @@ def webhook(request):
         for event in events:
             # Make sure the even is 'Message Event'
             if isinstance(event, MessageEvent):
-                print('event form line', event)
+                print('event form line: ', event)
 
                 # Make sure the message is 'Text Message'
                 if isinstance(event.message, TextMessage):
-                    if event.message.text.startswith('TrueNews'):
+                    if event.message.text.startswith('Real News'):
                         reply_text = "Thank You!"
                         v_response(event.reply_token, reply_text)
-                    elif event.message.text.startswith('FakeNews'):
+                    elif event.message.text.startswith('Fake News'):
                         reply_text = "Thank You!"
                         v_response(event.reply_token, reply_text)
                     elif event.message.text.startswith('http'):
@@ -78,11 +78,11 @@ def reply_to_line(reply_token, user_id, reply_text):
         text = reply_text,
         actions=[
             MessageTemplateAction(
-                label='True', text='TrueNews'
+                label='True', text='Real News'
             ),
             MessageTemplateAction(
-                label='False', text='FalseNews'
-            ),
+                label='False', text='Fake News'
+            )
         ]
     )
     
@@ -104,7 +104,7 @@ def detect_fake_news(text):
     prediction = load_model.predict([text])
     probability = load_model.predict_proba([text])
 
-    output = "News is " + str(prediction[0]) + ", Fake news probability is " + str('%.2f' % probability[0][0])
+    output = "News is " + str(prediction[0]) + ", Fake news probability is " + str('%.2f' % probability[0][0]+" What do you think?")
     return output
 
 # Detect the fake news
@@ -117,5 +117,5 @@ def detect_fake_news_by_url(inputUrl):
     load_model = pickle.load(open(os.path.join(settings.BASE_DIR, 'model_training/model.sav'), 'rb'))
     prediction = load_model.predict([inputNews])
     probability = load_model.predict_proba([inputNews])
-    output = "News is " + str(prediction[0]) + ", Fake news probability is " + str('%.2f' % probability[0][0])
+    output = "News is " + str(prediction[0]) + ", Fake news probability is " + str('%.2f' % probability[0][0]+" What do you think?")
     return output
