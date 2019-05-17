@@ -5,8 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage
-from linebot.models import TemplateSendMessage, ButtonsTemplate, PostbackTemplateAction, MessageTemplateAction, URITemplateAction
+from linebot.models import MessageEvent, TextMessage, TextSendMessage, TemplateSendMessage, ButtonsTemplate, MessageTemplateAction
 
 from newsplease import NewsPlease
 
@@ -52,9 +51,11 @@ def webhook(request):
                         # detect the fake news
                         print(event.message.text)
                         reply_text = detect_fake_news(event.message.text)
-                    
+
+                    print("user id: "+ event.source.userId)
+                    userId = event.source.userId
                     # Reply to Line
-                    reply_to_line(event.reply_token, event.source.userId, reply_text)
+                    reply_to_line(event.reply_token, userId, reply_text)
 
 
         # Response 200
@@ -68,8 +69,6 @@ def reply_to_line(reply_token, userId, reply_text):
     if reply_text == None:
         return None
 
-    outputText = reply_text + "What do you think about the news you request?"
-
     button_template_message = ButtonsTemplate(
         title = reply_text,
         text = "What do you think about the news you request?",
@@ -82,6 +81,8 @@ def reply_to_line(reply_token, userId, reply_text):
             ),
         ]
     )
+
+    print("user id: " + userId)
 
     line_bot_api = LineBotApi(reply_token)
     
