@@ -42,12 +42,15 @@ def webhook(request):
                 print('event form line', event)
                 # Make sure the message is 'Text Message'
                 if isinstance(event.message, TextMessage):
-                    # detect the fake news
-                    # reply_text = detect_fake_news(event.message.text)
-                    # detect the fake news by url
 
-                    print(event.message.text)
-                    reply_text = detect_fake_news_by_url(event.message.text)
+                    if event.message.text.startswith('http'):
+                        # detect the fake news by url
+                        print(event.message.text)
+                        reply_text = detect_fake_news_by_url(event.message.text)
+                    else:
+                        # detect the fake news
+                        print(event.message.text)
+                        reply_text = detect_fake_news(event.message.text)
                     
                     # Reply to Line
                     reply_to_line(event.reply_token, reply_text)
