@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
+from linebot.models import TemplateSendMessage, ButtonsTemplate, PostbackTemplateAction, MessageTemplateAction, URITemplateAction
 
 from newsplease import NewsPlease
 
@@ -67,33 +68,28 @@ def reply_to_line(reply_token, reply_text):
     if reply_text == None:
         return None
 
-    outputText = reply_text + " What do you think about the news you request?"
+    outputText = reply_text + "What do you think about the news you request?"
 
-    message = {
-        "type":"template",
-        "altText":"news analysis result return",
-        "template": {
-            "type": "button",
-            "text": outputText,
-            "action":[
-                {
-                    "type":"message",
-                    "label": "True",
-                    "text": "1"
-                },{
-                    "type":"message",
-                    "label": "False",
-                    "text": "2"
-                }
-            ]
-        }
-    }
-
-    line_bot_api.reply_message(
-        reply_token,
-        message
-        # TextSendMessage(text=reply_text)
+    button_template_message = ButtonsTemplate(
+        title = reply_text,
+        text = "What do you think about the news you request?",
+        actions=[
+            MessageTemplateAction(
+                label='True', text='TrueNews'
+            ),
+            MessageTemplateAction(
+                label='False', text='FalseNews'
+            ),
+        ]
     )
+
+    line_bot_api = LineBotApi(reply_token)
+    
+    try:
+        line_bot_api.push_message(to, TemplateSendMessage(alt_text="Please Use in Phone", template=button_template_message))
+    except LineBotApiError as e:
+        # error handle
+        raise e
 
 
 # Detect the fake news
