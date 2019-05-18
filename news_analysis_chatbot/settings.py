@@ -36,6 +36,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'news-analysis-chatbot.herokuapp.com',
+    'news-analysis-chatbot-frontend.herokuapp.com',
     '127.0.0.1',
 ]
 

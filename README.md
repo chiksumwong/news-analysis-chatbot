@@ -49,7 +49,13 @@ $ pip install -r requirements.txt
 $ heroku login
 
 $ heroku logs -t -a news-analysis-chatbot
+
 ```
+## Heroku database migrate
+```sh
+$ heroku run python manage.py migrate -a news-analysis-chatbot
+```
+
 ## True news websites:
 - https://www.nytimes.com/2019/01/18/opinion/sunday/cuba-healthcare-medicare.html?action=click&module=Opinion&pgtype=Homepage
 

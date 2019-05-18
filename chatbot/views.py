@@ -9,8 +9,12 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage, TemplateS
 
 from newsplease import NewsPlease
 
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
+from chatbot.serializers import RecordSerializer
+
 from chatbot.models import Record as ChatbotModels
-from news.models import News as NewsModel
+from news.models import News as NewsModels
 
 import pickle
 
@@ -64,7 +68,7 @@ def webhook(request):
                         reply_to_line(event.reply_token, event.source.user_id, reply_text)
 
         # Response 200
-        return HttpResponse(reply_text, status=200)
+        return HttpResponse(status=200)
     else:
         return HttpResponseBadRequest()
 
@@ -101,11 +105,12 @@ def reply_to_line(reply_token, user_id, reply_text):
 def help_label(input_label, reply_token, userId):
 
     # get statement by channel id (user id)
-    data = ChatbotModels.object.raw('SELECT * FROM record WHERE channel = %s ORDER BY ID DESC LIMIT 1', [userId])
-    print(data.statement)
+    data = ChatbotModels.objects.raw('SELECT * FROM record WHERE channel = %s ORDER BY ID DESC LIMIT 1', [userId])[0]
+    print(data)    
+    print(data.text)
 
     # update statement
-    updateData=NewsModel.objects.filter(statement=data.statement)
+    updateData=NewsModels.objects.filter(statement=data.text)
     updateData.update(label = input_label)
 
     reply_text = "Thank you for helping to improve the accuracy of the classifier!"
@@ -122,10 +127,10 @@ def detect_fake_news(userId, text):
     probability = load_model.predict_proba([text])
 
     # inset to database
-    ChatbotModels.objects.create(channel=userId, text=text, result=prediction, probability=probability)
+    ChatbotModels.objects.create(channel=userId, text=text, result=str(prediction[0]), probability=str(probability[0][0]))
 
     # inset to news
-    NewsModel.object.create(statement=text, label="NONE")
+    NewsModels.objects.create(statement=text, label="NONE")
 
     output = "News is " + str(prediction[0]) + ",Fake news probability is " + str('%.2f' % probability[0][0]+".You think it is")
     return output
@@ -142,10 +147,23 @@ def detect_fake_news_by_url(userId, inputUrl):
     probability = load_model.predict_proba([inputNews])
 
     # inset to database
-    ChatbotModels.objects.create(channel=userId, text=inputNews, result=prediction, probability=probability)
+    ChatbotModels.objects.create(channel=userId, text=inputNews, result=str(prediction[0]), probability=str(probability[0][0]))
 
     # inset to news
-    NewsModel.object.create(statement=inputNews, label="NONE")
+    NewsModels.objects.create(statement=inputNews, label="NONE")
 
     output = "News is " + str(prediction[0]) + ",Fake news probability is " + str('%.2f' % probability[0][0]+".You think it is")
     return output
+
+
+class RecordViewSet(viewsets.ModelViewSet):
+    queryset = ChatbotModels.objects.all()
+    serializer_class = RecordSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_permissions(self):
+        if self.action in ('list',):
+            self.permission_classes = []
+        else:
+            self.permission_classes = [IsAuthenticated]
+        return [permission() for permission in self.permission_classes]
