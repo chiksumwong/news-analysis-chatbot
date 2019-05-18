@@ -105,7 +105,8 @@ def reply_to_line(reply_token, user_id, reply_text):
 def help_label(input_label, reply_token, userId):
 
     # get statement by channel id (user id)
-    data = ChatbotModels.objects.raw('SELECT * FROM record WHERE channel = %s ORDER BY ID DESC LIMIT 1', [userId])
+    data = ChatbotModels.objects.raw('SELECT * FROM record WHERE channel = %s ORDER BY ID DESC LIMIT 1', [userId])[0]
+    print(data)    
     print(data.statement)
 
     # update statement
@@ -126,7 +127,7 @@ def detect_fake_news(userId, text):
     probability = load_model.predict_proba([text])
 
     # inset to database
-    ChatbotModels.objects.create(channel=userId, text=text, result=prediction, probability=probability)
+    ChatbotModels.objects.create(channel=userId, text=text, result=str(prediction[0]), probability=str(probability[0][0]))
 
     # inset to news
     NewsModels.objects.create(statement=text, label="NONE")
@@ -146,7 +147,7 @@ def detect_fake_news_by_url(userId, inputUrl):
     probability = load_model.predict_proba([inputNews])
 
     # inset to database
-    ChatbotModels.objects.create(channel=userId, text=inputNews, result=prediction, probability=probability)
+    ChatbotModels.objects.create(channel=userId, text=text, result=str(prediction[0]), probability=str(probability[0][0]))
 
     # inset to news
     NewsModels.objects.create(statement=inputNews, label="NONE")
