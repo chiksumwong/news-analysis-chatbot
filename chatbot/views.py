@@ -68,7 +68,7 @@ def webhook(request):
                         reply_to_line(event.reply_token, event.source.user_id, reply_text)
 
         # Response 200
-        return HttpResponse(reply_text, status=200)
+        return HttpResponse(status=200)
     else:
         return HttpResponseBadRequest()
 
