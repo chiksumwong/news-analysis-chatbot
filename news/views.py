@@ -9,6 +9,8 @@ from news.models import News
 
 from newsplease import NewsPlease
 
+from chatbot.models import Record as ChatbotModels
+
 import os
 import pickle
 import json
@@ -24,7 +26,6 @@ class NewsViewSet(viewsets.ModelViewSet):
         else:
             self.permission_classes = [IsAuthenticated]
         return [permission() for permission in self.permission_classes]
-
 
 
 
@@ -46,6 +47,9 @@ class FakeNewsDector:
         probability = load_model.predict_proba([inputNews])
         output = "The news is " + str(prediction[0]) + ", The fake news probability is " + str(probability[0][0]) +"."
 
+        # inset to database
+        ChatbotModels.objects.create(channel="localhost", text=inputNews, result=str(prediction[0]), probability=str(probability[0][0]))
+        
         # output the result
         return HttpResponse(output, status=200)
 
@@ -68,6 +72,9 @@ class FakeNewsDector:
         probability = load_model.predict_proba([inputNews])
         output = "The news is " + str(prediction[0]) + ", The fake news probability is " + str(probability[0][0]) +"."
 
+        # inset to database
+        ChatbotModels.objects.create(channel="localhost", text=inputNews, result=str(prediction[0]), probability=str(probability[0][0]))
+        
         # output the result
         return HttpResponse(output, status=200)
 

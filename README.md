@@ -10,7 +10,7 @@ $ python manage.py runserver
 ```sh
 $ python manage.py makemigrations
 ```
-### Update to database
+### Create a file to update the database
 ```sh
 $ python manage.py migrate
 ```
