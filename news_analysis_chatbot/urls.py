@@ -26,7 +26,7 @@ urlpatterns = [
     path('chatbot/', include('chatbot.urls')),
     path('api/', include('news.urls')),
     
-    path('users/', include('account.urls')),
-    path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('user/', include('account.urls')),
+    path('user/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
