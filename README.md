@@ -5,7 +5,15 @@
 ```sh
 $ python manage.py runserver
 ```
-
+## Database
+### Create migrations file in app by model
+```sh
+$ python manage.py makemigrations
+```
+### Update to database
+```sh
+$ python manage.py migrate
+```
 ## URL
 ### Chatbot
 | Method | Urls                                   |

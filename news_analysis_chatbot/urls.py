@@ -3,7 +3,10 @@ from django.urls import path
 from django.conf.urls import url, include
 
 from rest_framework.routers import DefaultRouter
-from rest_framework_jwt.views import obtain_jwt_token
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 from news import views
 import chatbot
@@ -15,10 +18,11 @@ router.register(r'news', views.NewsViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-token-auth/', obtain_jwt_token),
     path('chatbot/', include('chatbot.urls')),
     path('api/', include('news.urls')),
     path('api/', include(router.urls)),
     
     path('users/', include('account.urls')),
+    path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

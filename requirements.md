@@ -1,7 +1,7 @@
 # django
 Django
 djangorestframework
-djangorestframework-jwt
+djangorestframework_simplejwt
 
 # django cors
 django-cors-headers
