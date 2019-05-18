@@ -8,19 +8,23 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
-from news import views
+from news import views as NewsViews
+from chatbot import views as ChatbotViews
+
 import chatbot
 import news
 import account
 
 router = DefaultRouter()
-router.register(r'news', views.NewsViewSet)
+router.register(r'news', NewsViews.NewsViewSet)
+router.register(r'record', ChatbotViews.RecordViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', include(router.urls)),
+
     path('chatbot/', include('chatbot.urls')),
     path('api/', include('news.urls')),
-    path('api/', include(router.urls)),
     
     path('users/', include('account.urls')),
     path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),

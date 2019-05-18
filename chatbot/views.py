@@ -9,6 +9,10 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage, TemplateS
 
 from newsplease import NewsPlease
 
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
+from chatbot.serializers import RecordSerializer
+
 from chatbot.models import Record as ChatbotModels
 from news.models import News as NewsModels
 
@@ -149,3 +153,16 @@ def detect_fake_news_by_url(userId, inputUrl):
 
     output = "News is " + str(prediction[0]) + ",Fake news probability is " + str('%.2f' % probability[0][0]+".You think it is")
     return output
+
+
+class RecordViewSet(viewsets.ModelViewSet):
+    queryset = ChatbotModels.objects.all()
+    serializer_class = RecordSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_permissions(self):
+        if self.action in ('list',):
+            self.permission_classes = []
+        else:
+            self.permission_classes = [IsAuthenticated]
+        return [permission() for permission in self.permission_classes]
