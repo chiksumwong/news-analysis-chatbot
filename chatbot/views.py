@@ -107,10 +107,10 @@ def help_label(input_label, reply_token, userId):
     # get statement by channel id (user id)
     data = ChatbotModels.objects.raw('SELECT * FROM record WHERE channel = %s ORDER BY ID DESC LIMIT 1', [userId])[0]
     print(data)    
-    print(data.statement)
+    print(data.text)
 
     # update statement
-    updateData=NewsModels.objects.filter(statement=data.statement)
+    updateData=NewsModels.objects.filter(statement=data.text)
     updateData.update(label = input_label)
 
     reply_text = "Thank you for helping to improve the accuracy of the classifier!"
