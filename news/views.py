@@ -18,6 +18,15 @@ class NewsViewSet(viewsets.ModelViewSet):
     serializer_class = NewsSerializer
     permission_classes = (IsAuthenticated,)
 
+    def get_permissions(self):
+        if self.action in ('list',):
+            self.permission_classes = []
+        else:
+            self.permission_classes = [IsAuthenticated]
+        return [permission() for permission in self.permission_classes]
+
+
+
 
 
 class FakeNewsDector:
