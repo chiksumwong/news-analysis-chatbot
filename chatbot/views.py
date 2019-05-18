@@ -147,7 +147,7 @@ def detect_fake_news_by_url(userId, inputUrl):
     probability = load_model.predict_proba([inputNews])
 
     # inset to database
-    ChatbotModels.objects.create(channel=userId, text=text, result=str(prediction[0]), probability=str(probability[0][0]))
+    ChatbotModels.objects.create(channel=userId, text=inputNews, result=str(prediction[0]), probability=str(probability[0][0]))
 
     # inset to news
     NewsModels.objects.create(statement=inputNews, label="NONE")
