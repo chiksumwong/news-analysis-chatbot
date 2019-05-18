@@ -5,18 +5,19 @@ from django.conf import settings
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from news.serializers import NewsSerializer
-from news.models import News
 
 from newsplease import NewsPlease
 
 from chatbot.models import Record as ChatbotModels
+from news.models import News as NewsModels
+
 
 import os
 import pickle
 import json
 
 class NewsViewSet(viewsets.ModelViewSet):
-    queryset = News.objects.all()
+    queryset = NewsModels.objects.all()
     serializer_class = NewsSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -50,6 +51,9 @@ class FakeNewsDector:
         # inset to database
         ChatbotModels.objects.create(channel="localhost", text=inputNews, result=str(prediction[0]), probability=str(probability[0][0]))
         
+        # inset to news
+        NewsModels.objects.create(statement=inputNews, label="NONE")
+
         # output the result
         return HttpResponse(output, status=200)
 
@@ -75,6 +79,9 @@ class FakeNewsDector:
         # inset to database
         ChatbotModels.objects.create(channel="localhost", text=inputNews, result=str(prediction[0]), probability=str(probability[0][0]))
         
+        # inset to news
+        NewsModels.objects.create(statement=inputNews, label="NONE")
+
         # output the result
         return HttpResponse(output, status=200)
 

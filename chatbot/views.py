@@ -10,7 +10,7 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage, TemplateS
 from newsplease import NewsPlease
 
 from chatbot.models import Record as ChatbotModels
-from news.models import News as NewsModel
+from news.models import News as NewsModels
 
 import pickle
 
@@ -101,11 +101,11 @@ def reply_to_line(reply_token, user_id, reply_text):
 def help_label(input_label, reply_token, userId):
 
     # get statement by channel id (user id)
-    data = ChatbotModels.object.raw('SELECT * FROM record WHERE channel = %s ORDER BY ID DESC LIMIT 1', [userId])
+    data = ChatbotModels.objects.raw('SELECT * FROM record WHERE channel = %s ORDER BY ID DESC LIMIT 1', [userId])
     print(data.statement)
 
     # update statement
-    updateData=NewsModel.objects.filter(statement=data.statement)
+    updateData=NewsModels.objects.filter(statement=data.statement)
     updateData.update(label = input_label)
 
     reply_text = "Thank you for helping to improve the accuracy of the classifier!"
@@ -125,7 +125,7 @@ def detect_fake_news(userId, text):
     ChatbotModels.objects.create(channel=userId, text=text, result=prediction, probability=probability)
 
     # inset to news
-    NewsModel.object.create(statement=text, label="NONE")
+    NewsModels.objects.create(statement=text, label="NONE")
 
     output = "News is " + str(prediction[0]) + ",Fake news probability is " + str('%.2f' % probability[0][0]+".You think it is")
     return output
@@ -145,7 +145,7 @@ def detect_fake_news_by_url(userId, inputUrl):
     ChatbotModels.objects.create(channel=userId, text=inputNews, result=prediction, probability=probability)
 
     # inset to news
-    NewsModel.object.create(statement=inputNews, label="NONE")
+    NewsModels.objects.create(statement=inputNews, label="NONE")
 
     output = "News is " + str(prediction[0]) + ",Fake news probability is " + str('%.2f' % probability[0][0]+".You think it is")
     return output
