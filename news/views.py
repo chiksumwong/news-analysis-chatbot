@@ -3,19 +3,32 @@ from django.http import HttpResponse
 from django.conf import settings
 
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 from news.serializers import NewsSerializer
-from news.models import News
 
 from newsplease import NewsPlease
+
+from chatbot.models import Record as ChatbotModels
+from news.models import News as NewsModels
+
 
 import os
 import pickle
 import json
 
 class NewsViewSet(viewsets.ModelViewSet):
-    lookup_field = 'id'
-    queryset = News.objects.all()
+    queryset = NewsModels.objects.all()
     serializer_class = NewsSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_permissions(self):
+        if self.action in ('list',):
+            self.permission_classes = []
+        else:
+            self.permission_classes = [IsAuthenticated]
+        return [permission() for permission in self.permission_classes]
+
+
 
 
 class FakeNewsDector:
@@ -33,7 +46,13 @@ class FakeNewsDector:
         load_model = pickle.load(open(os.path.join(settings.BASE_DIR, 'model_training/model.sav'), 'rb'))
         prediction = load_model.predict([inputNews])
         probability = load_model.predict_proba([inputNews])
-        output = "The news is " + str(prediction[0]) + ", The fake news probability is " + str(probability[0][0]) +"."
+        output = "The news is " + str(prediction[0]) + ", The fake news probability is " + str('%.2f' % probability[0][0]) +"."
+
+        # inset to database
+        ChatbotModels.objects.create(channel="localhost", text=inputNews, result=str(prediction[0]), probability=str('%.2f' % probability[0][0]))
+        
+        # inset to news
+        NewsModels.objects.create(statement=inputNews, label="None")
 
         # output the result
         return HttpResponse(output, status=200)
@@ -55,7 +74,13 @@ class FakeNewsDector:
         load_model = pickle.load(open(os.path.join(settings.BASE_DIR, 'model_training/model.sav'), 'rb'))
         prediction = load_model.predict([inputNews])
         probability = load_model.predict_proba([inputNews])
-        output = "The news is " + str(prediction[0]) + ", The fake news probability is " + str(probability[0][0]) +"."
+        output = "The news is " + str(prediction[0]) + ", The fake news probability is " + str('%.2f' % probability[0][0]) +"."
+
+        # inset to database
+        ChatbotModels.objects.create(channel="localhost", text=inputNews, result=str(prediction[0]), probability=str('%.2f' % probability[0][0]))
+        
+        # inset to news
+        NewsModels.objects.create(statement=inputNews, label="None")
 
         # output the result
         return HttpResponse(output, status=200)

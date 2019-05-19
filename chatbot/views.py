@@ -9,6 +9,13 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage, TemplateS
 
 from newsplease import NewsPlease
 
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
+from chatbot.serializers import RecordSerializer
+
+from chatbot.models import Record as ChatbotModels
+from news.models import News as NewsModels
+
 import pickle
 
 
@@ -44,28 +51,28 @@ def webhook(request):
                 # Make sure the message is 'Text Message'
                 if isinstance(event.message, TextMessage):
                     if event.message.text.startswith('Real News'):
-                        reply_text = "Thank you for helping to improve the accuracy of the classifier!"
-                        v_response(event.reply_token, reply_text)
+                        help_label("True", event.reply_token, event.source.user_id)
                     elif event.message.text.startswith('Fake News'):
-                        reply_text = "Thank you for helping to improve the accuracy of the classifier!"
-                        v_response(event.reply_token, reply_text)
+                        help_label("False", event.reply_token, event.source.user_id)
                     elif event.message.text.startswith('http'):
                         # detect the fake news by url
                         print(event.message.text)
-                        reply_text = detect_fake_news_by_url(event.message.text)
+                        reply_text = detect_fake_news_by_url(event.source.user_id, event.message.text)
                         # Reply to Line
                         reply_to_line(event.reply_token, event.source.user_id, reply_text)
                     else:
                         # detect the fake news
                         print(event.message.text)
-                        reply_text = detect_fake_news(event.message.text)
+                        reply_text = detect_fake_news(event.source.user_id, event.message.text)
                         # Reply to Line
                         reply_to_line(event.reply_token, event.source.user_id, reply_text)
 
         # Response 200
-        return HttpResponse(reply_text, status=200)
+        return HttpResponse(status=200)
     else:
         return HttpResponseBadRequest()
+
+
 
 
 # Reply to Line
@@ -92,23 +99,44 @@ def reply_to_line(reply_token, user_id, reply_text):
         # error handle
         raise e
 
-# Reply to Line
-def v_response(reply_token, reply_text):
-    if reply_text == None:
-        return None
+
+
+# handle the helper
+def help_label(input_label, reply_token, userId):
+
+    # get statement by channel id (user id)
+    data = ChatbotModels.objects.raw('SELECT * FROM record WHERE channel = %s ORDER BY ID DESC LIMIT 1', [userId])[0]
+    print(data)    
+    print(data.text)
+
+    # update statement
+    updateData=NewsModels.objects.filter(statement=data.text)
+    updateData.update(label = input_label)
+
+    reply_text = "Thank you for helping to improve the accuracy of the classifier!"
+
+    # Reply to Line
     line_bot_api.reply_message(reply_token, TextSendMessage(text=reply_text))
+    
+
 
 # Detect the fake news
-def detect_fake_news(text):
+def detect_fake_news(userId, text):
     load_model = pickle.load(open(os.path.join(settings.BASE_DIR, 'model_training/model.sav'), 'rb'))
     prediction = load_model.predict([text])
     probability = load_model.predict_proba([text])
+
+    # inset to database
+    ChatbotModels.objects.create(channel=userId, text=text, result=str(prediction[0]), probability=str('%.2f' % probability[0][0]))
+
+    # inset to news
+    NewsModels.objects.create(statement=text, label="None")
 
     output = "News is " + str(prediction[0]) + ",Fake news probability is " + str('%.2f' % probability[0][0]+".You think it is")
     return output
 
 # Detect the fake news
-def detect_fake_news_by_url(inputUrl):
+def detect_fake_news_by_url(userId, inputUrl):
     # get the news text from given url
     article = NewsPlease.from_url(inputUrl)
     inputNews = article.text
@@ -117,5 +145,25 @@ def detect_fake_news_by_url(inputUrl):
     load_model = pickle.load(open(os.path.join(settings.BASE_DIR, 'model_training/model.sav'), 'rb'))
     prediction = load_model.predict([inputNews])
     probability = load_model.predict_proba([inputNews])
+
+    # inset to database
+    ChatbotModels.objects.create(channel=userId, text=inputNews, result=str(prediction[0]), probability=str('%.2f' % probability[0][0]))
+
+    # inset to news
+    NewsModels.objects.create(statement=inputNews, label="None")
+
     output = "News is " + str(prediction[0]) + ",Fake news probability is " + str('%.2f' % probability[0][0]+".You think it is")
     return output
+
+
+class RecordViewSet(viewsets.ModelViewSet):
+    queryset = ChatbotModels.objects.all()
+    serializer_class = RecordSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_permissions(self):
+        if self.action in ('list',):
+            self.permission_classes = []
+        else:
+            self.permission_classes = [IsAuthenticated]
+        return [permission() for permission in self.permission_classes]
