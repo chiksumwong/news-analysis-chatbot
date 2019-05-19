@@ -24,8 +24,8 @@ More APIs Information:
 
 Or
 
-- Import E-Commerce Platform APIs.postman_collection.json to Postman
-- 
+- Import Chatbot.postman_collection.json to Postman
+
 ### Account APIs
 | APIs     | Method | Urls                                 |
 | -------- | ------ | ------------------------------------ |
