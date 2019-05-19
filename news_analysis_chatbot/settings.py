@@ -181,6 +181,7 @@ SIMPLE_JWT = {
 # CORS
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:8080',
+    'https://news-analysis-chatbot-frontend.herokuapp.com'
 ]
 
 import django_heroku
