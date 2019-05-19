@@ -19,7 +19,13 @@ $ python manage.py makemigrations
 $ python manage.py migrate
 ```
 ## APIs
+More APIs Information: 
+- link: https://documenter.getpostman.com/view/3391889/S1M3v521
 
+Or
+
+- Import E-Commerce Platform APIs.postman_collection.json to Postman
+- 
 ### Account APIs
 | APIs     | Method | Urls                                 |
 | -------- | ------ | ------------------------------------ |
@@ -100,3 +106,18 @@ $ pip freeze > requirements.txt
 <img src='static/screenshot/LINE_URL.jpg' width="200" alt='LINE'>
 </kbd>
 </p>
+
+## Dashboard
+https://news-analysis-chatbot-frontend.herokuapp.com/
+<p>
+<kbd>
+<img src='static/screenshot/Dashboard.png' alt='Dashboard'>
+</kbd>
+</p>
+Admin:
+admin
+12345678
+
+Volunteer:
+Sam
+12345678

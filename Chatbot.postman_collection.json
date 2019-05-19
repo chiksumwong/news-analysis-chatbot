@@ -1,0 +1,600 @@
+{
+	"info": {
+		"_postman_id": "3f379eb5-4f0f-4b78-9d5e-f85a703b43dc",
+		"name": "Chatbot",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Check News By Text",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"text\":\"Tom Heneghan just released the names of all those directly involved in the theft of trillions from the US Treasury through moving the money illegally into the Manna and Argo Trusts run by the deep state!   This money has bought off all the fake news and both political parties!   This is the money stolen from Lee Wanta who wants to pay for the entire wall himself as well as pay off all legitimate student loan debt!   Tom also released a brief recording from Tom Mellville of the US Treasury in which he was leaving a message for Lee Wanta back last March.  This is when Wanta was told the funds were stolen by a woman named Kim Cogan at the US Treasury.\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/checknews/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"checknews",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check News By URL",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"url\":\"https://www.nytimes.com/2019/01/18/opinion/sunday/cuba-healthcare-medicare.html?action=click&module=Opinion&pgtype=Homepage\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/checknewsbyurl/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"checknewsbyurl",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Heroku) Check News By Text",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"text\":\"Tom Heneghan just released the names of all those directly involved in the theft of trillions from the US Treasury through moving the money illegally into the Manna and Argo Trusts run by the deep state!   This money has bought off all the fake news and both political parties!   This is the money stolen from Lee Wanta who wants to pay for the entire wall himself as well as pay off all legitimate student loan debt!   Tom also released a brief recording from Tom Mellville of the US Treasury in which he was leaving a message for Lee Wanta back last March.  This is when Wanta was told the funds were stolen by a woman named Kim Cogan at the US Treasury.\"\n}"
+				},
+				"url": {
+					"raw": "news-analysis-chatbot.herokuapp.com/api/checknews/",
+					"host": [
+						"news-analysis-chatbot",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"checknews",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Heroku) Check News By URL",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"url\":\"https://www.nytimes.com/2019/01/18/opinion/sunday/cuba-healthcare-medicare.html?action=click&module=Opinion&pgtype=Homepage\"\n}"
+				},
+				"url": {
+					"raw": "news-analysis-chatbot.herokuapp.com/api/checknewsbyurl/",
+					"host": [
+						"news-analysis-chatbot",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"checknewsbyurl",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get News Info By URL",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"url\":\"https://www.nytimes.com/2019/01/18/opinion/sunday/cuba-healthcare-medicare.html?action=click&module=Opinion&pgtype=Homepage\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/newsinfo/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"newsinfo",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All News",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": " JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6IkphY2siLCJleHAiOjE1NTgxNDk2MTYsImVtYWlsIjoiSmFja0BleGFtcGxlLmNvbSJ9.c-UZiLi8DrbicWBUp9RXieEJ_6g4zHKHocs1LqjrRV8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/news/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"news",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create News",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTU4MzE4NjgwLCJqdGkiOiJmOThiZWNhOWY2ZjQ0ZGYwODg1ZjU0OTA2YjYyYjBmYyIsInVzZXJfaWQiOjZ9.i0iGcIpJxQiEd9NXZcXnlBo6talCyLT7Pt4OFMN7NMk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": " JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6IkphY2siLCJleHAiOjE1NTgxNDk2MTYsImVtYWlsIjoiSmFja0BleGFtcGxlLmNvbSJ9.c-UZiLi8DrbicWBUp9RXieEJ_6g4zHKHocs1LqjrRV8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"statement\": \"BALTIMORE — The deep breaths came fast and furious in the opening moments of the 144th running of the Preakness Stakes, and for good reason: John Velazquez, a Hall of Fame jockey, was airborne one moment and in the dirt the next after his colt, Bodexpress, broke out of the starting gate like a rodeo horse rather than a thoroughbred.\",\r\n    \"label\": \"True\"\r\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/news/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"news",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get News By ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTU4MjM3OTc0LCJqdGkiOiJkZmE5YTNhMDA0NmY0Y2IwOWYxZTE1N2FiNDU3MjE4ZSIsInVzZXJfaWQiOjF9.w4GF5Mi7KP8d4GXi6e6PX9FgZqFkwl487-yA9TZYqW4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6IkphY2siLCJleHAiOjE1NTgxNDc1NjQsImVtYWlsIjoiSmFja0BleGFtcGxlLmNvbSJ9.vamHe5PCGFomWniANCOG-HNi13IgLXYFO4Hhoj0-Cs0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/news/1/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"news",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update News By ID",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"statement\": \"This is test 3 title\",\r\n    \"label\": \"This is test 3 body\"\r\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/news/2/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"news",
+						"2",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete News By ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/news/2/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"news",
+						"2",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"Boby\",\n\t\"email\":\"Boby@example.com\",\n\t\"password\":\"12345678\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/user/register/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"user",
+						"register",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"Sam\",\n    \"password\": \"12345678\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/user/login/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"user",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Heroku) Get All News",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://news-analysis-chatbot.herokuapp.com/api/news/",
+					"protocol": "https",
+					"host": [
+						"news-analysis-chatbot",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"news",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Reocrd",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/record/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"record",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Heroku) Get All Record",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://news-analysis-chatbot.herokuapp.com/api/record/",
+					"protocol": "https",
+					"host": [
+						"news-analysis-chatbot",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"record",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Heroku) Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"Sam\",\n    \"password\": \"12345678\"\n}"
+				},
+				"url": {
+					"raw": "https://news-analysis-chatbot.herokuapp.com/user/login/",
+					"protocol": "https",
+					"host": [
+						"news-analysis-chatbot",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Heroku) Register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"admin\",\n\t\"email\":\"admin@example.com\",\n\t\"password\":\"12345678\"\n}"
+				},
+				"url": {
+					"raw": "https://news-analysis-chatbot.herokuapp.com/user/register/",
+					"protocol": "https",
+					"host": [
+						"news-analysis-chatbot",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"register",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Heroku) Delete Record By Id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTU4MzI3NjE1LCJqdGkiOiJkZGIzY2ZhZjk5Njk0MjYxOGVlZGEwNjNkOTIxNDM5YSIsInVzZXJfaWQiOjF9.J_9U5QoWgAmOOmGLH-N2c_Swou5i4q83nF4ktiE_aB8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://news-analysis-chatbot.herokuapp.com/api/record/3/",
+					"protocol": "https",
+					"host": [
+						"news-analysis-chatbot",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"record",
+						"3",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
