@@ -100,6 +100,9 @@ $ pip freeze > requirements.txt
 ## Chatbot
 <p>
 <kbd>
+<img src='static/screenshot/LINE_GREETINGS.jpg' width="200" alt='LINE'>
+</kbd>
+<kbd>
 <img src='static/screenshot/LINE_TEXT.jpg' width="200" alt='LINE'>
 </kbd>
 <kbd>
