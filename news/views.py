@@ -46,13 +46,13 @@ class FakeNewsDector:
         load_model = pickle.load(open(os.path.join(settings.BASE_DIR, 'model_training/model.sav'), 'rb'))
         prediction = load_model.predict([inputNews])
         probability = load_model.predict_proba([inputNews])
-        output = "The news is " + str(prediction[0]) + ", The fake news probability is " + str(probability[0][0]) +"."
+        output = "The news is " + str(prediction[0]) + ", The fake news probability is " + str('%.2f' % probability[0][0]) +"."
 
         # inset to database
-        ChatbotModels.objects.create(channel="localhost", text=inputNews, result=str(prediction[0]), probability=str(probability[0][0]))
+        ChatbotModels.objects.create(channel="localhost", text=inputNews, result=str(prediction[0]), probability=str('%.2f' % probability[0][0]))
         
         # inset to news
-        NewsModels.objects.create(statement=inputNews, label="NONE")
+        NewsModels.objects.create(statement=inputNews, label="None")
 
         # output the result
         return HttpResponse(output, status=200)
@@ -74,13 +74,13 @@ class FakeNewsDector:
         load_model = pickle.load(open(os.path.join(settings.BASE_DIR, 'model_training/model.sav'), 'rb'))
         prediction = load_model.predict([inputNews])
         probability = load_model.predict_proba([inputNews])
-        output = "The news is " + str(prediction[0]) + ", The fake news probability is " + str(probability[0][0]) +"."
+        output = "The news is " + str(prediction[0]) + ", The fake news probability is " + str('%.2f' % probability[0][0]) +"."
 
         # inset to database
-        ChatbotModels.objects.create(channel="localhost", text=inputNews, result=str(prediction[0]), probability=str(probability[0][0]))
+        ChatbotModels.objects.create(channel="localhost", text=inputNews, result=str(prediction[0]), probability=str('%.2f' % probability[0][0]))
         
         # inset to news
-        NewsModels.objects.create(statement=inputNews, label="NONE")
+        NewsModels.objects.create(statement=inputNews, label="None")
 
         # output the result
         return HttpResponse(output, status=200)

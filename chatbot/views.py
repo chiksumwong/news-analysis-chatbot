@@ -127,10 +127,10 @@ def detect_fake_news(userId, text):
     probability = load_model.predict_proba([text])
 
     # inset to database
-    ChatbotModels.objects.create(channel=userId, text=text, result=str(prediction[0]), probability=str(probability[0][0]))
+    ChatbotModels.objects.create(channel=userId, text=text, result=str(prediction[0]), probability=str('%.2f' % probability[0][0]))
 
     # inset to news
-    NewsModels.objects.create(statement=text, label="NONE")
+    NewsModels.objects.create(statement=text, label="None")
 
     output = "News is " + str(prediction[0]) + ",Fake news probability is " + str('%.2f' % probability[0][0]+".You think it is")
     return output
@@ -147,10 +147,10 @@ def detect_fake_news_by_url(userId, inputUrl):
     probability = load_model.predict_proba([inputNews])
 
     # inset to database
-    ChatbotModels.objects.create(channel=userId, text=inputNews, result=str(prediction[0]), probability=str(probability[0][0]))
+    ChatbotModels.objects.create(channel=userId, text=inputNews, result=str(prediction[0]), probability=str('%.2f' % probability[0][0]))
 
     # inset to news
-    NewsModels.objects.create(statement=inputNews, label="NONE")
+    NewsModels.objects.create(statement=inputNews, label="None")
 
     output = "News is " + str(prediction[0]) + ",Fake news probability is " + str('%.2f' % probability[0][0]+".You think it is")
     return output

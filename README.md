@@ -1,6 +1,10 @@
 [![CircleCI](https://circleci.com/gh/chiksumwong/news_analysis_chatbot.svg?style=svg)](https://circleci.com/gh/chiksumwong/news_analysis_chatbot)
 # News Analysis Chatbot
 
+## Install package by using requirements.txt
+```sh
+$ pip install -r requirements.txt
+```
 ## Start Server
 ```sh
 $ python manage.py runserver
@@ -22,7 +26,7 @@ $ python manage.py migrate
 | Register | POST   | http://127.0.0.1:8000/user/register/ |
 | Login    | POST   | http://127.0.0.1:8000/user/login/    |
 
-### Chatbot APIs (Heroku)
+### Chatbot APIs (Heroku, LINE Message API)
 
 | APIs     | Method | Urls                                   |
 | -------- | ------ | -------------------------------------- |
@@ -61,14 +65,7 @@ $ python model_training/TrainModel.py
 ```sh
 $ python model_training/TestModel.py
 ```
-## Release python environment
-```sh
-$ pip freeze > requirements.txt
-```
-## Install package by using requirements.txt
-```sh
-$ pip install -r requirements.txt
-```
+
 ## Heroku View Log
 ```sh
 $ heroku login
@@ -79,6 +76,11 @@ $ heroku logs -t -a news-analysis-chatbot
 ## Heroku database migrate
 ```sh
 $ heroku run python manage.py migrate -a news-analysis-chatbot
+```
+
+## Release python environment
+```sh
+$ pip freeze > requirements.txt
 ```
 
 ## True news websites:
