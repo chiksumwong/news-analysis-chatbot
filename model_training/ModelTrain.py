@@ -21,12 +21,14 @@ from sklearn.svm import LinearSVC
 from sklearn.calibration import CalibratedClassifierCV
 
 # Model Evaluation
-from sklearn.model_selection import train_test_split  
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 
 def model_training():
     data_file_path = 'model_training/train.csv'
     data = pd.read_csv(data_file_path)
+    
+    # Drop Duplicate Rows
+    data = data.drop_duplicates()
 
     documents = []
     stemmer = WordNetLemmatizer()

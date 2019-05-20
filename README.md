@@ -75,6 +75,14 @@ $ python model_training/ModelEvaluate.py
 ```sh
 $ python model_training/ModelTest.py
 ```
+## Model update
+1. Download the news dataset from dashboard (heroku)
+2. Rename the csv file to "UP" + timestamp
+3. Put the file to input_labelled_news folder
+4. Run the follow code
+```sh
+$ python model_training/ModelUpdate.py
+```
 ## Heroku View Log
 ```sh
 $ heroku login
