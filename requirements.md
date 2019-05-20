@@ -26,3 +26,6 @@ django-heroku
 
 # Heroku - Python-PostgreSQL Database Adapter
 psycopg2
+
+## For Model Training
+panads

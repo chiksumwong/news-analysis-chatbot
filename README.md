@@ -65,13 +65,16 @@ Or
 
 ## Model training
 ```sh
-$ python model_training/TrainModel.py
+$ python model_training/ModelTrain.py
+```
+## Model evaluation
+```sh
+$ python model_training/ModelEvaluate.py
 ```
 ## Model testing
 ```sh
-$ python model_training/TestModel.py
+$ python model_training/ModelTest.py
 ```
-
 ## Heroku View Log
 ```sh
 $ heroku login
