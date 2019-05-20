@@ -18,6 +18,10 @@ $ python manage.py makemigrations
 ```sh
 $ python manage.py migrate
 ```
+## Create Admin
+```sh
+$ python manage.py createsuperuser --email admin@example.com --username admin
+```
 ## APIs
 More APIs Information: 
 - link: https://documenter.getpostman.com/view/3391889/S1M3v521
@@ -99,15 +103,6 @@ $ heroku run python manage.py migrate -a news-analysis-chatbot
 ```sh
 $ pip freeze > requirements.txt
 ```
-
-## True news websites:
-- https://www.nytimes.com/2019/01/18/opinion/sunday/cuba-healthcare-medicare.html?action=click&module=Opinion&pgtype=Homepage
-
-
-## Fake news websites:
-- https://newspunch.com/ag-barr-mocks-pelosi-madam-speaker-bring-handcuffs/
-
-
 ## Chatbot
 <p>
 <kbd>
@@ -128,10 +123,9 @@ https://news-analysis-chatbot-frontend.herokuapp.com/
 <img src='static/screenshot/Dashboard.png' alt='Dashboard'>
 </kbd>
 </p>
-Admin:
-admin
-12345678
 
-Volunteer:
-Sam
-12345678
+## True news websites:
+- https://www.nytimes.com/2019/01/18/opinion/sunday/cuba-healthcare-medicare.html?action=click&module=Opinion&pgtype=Homepage
+
+## Fake news websites:
+- https://newspunch.com/ag-barr-mocks-pelosi-madam-speaker-bring-handcuffs/
