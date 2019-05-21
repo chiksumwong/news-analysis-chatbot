@@ -61,7 +61,6 @@ def model_training():
 	# Feature Selection
     tfidfconverter = TfidfVectorizer(stop_words=stopwords.words('english'),ngram_range=(1,4),use_idf=True,smooth_idf=True)
 
-
     # Naive-Bayes Classifier
     nb_pipeline_ngram = Pipeline([
             ('nb_tfidf',tfidfconverter),
@@ -71,25 +70,25 @@ def model_training():
     #saving model to the disk
     pickle.dump(nb_pipeline_ngram,open('model_training/classifier_model/nb_model.sav','wb'))
 
-
 	# logistic Regression Classifier
     logR_pipeline_ngram = Pipeline([
             ('LogR_tfidf',tfidfconverter),
             ('LogR_clf',LogisticRegression(solver='liblinear',penalty="l2",C=1))
             ])
+    # Train model
     logR_pipeline_ngram.fit(documents,data['Label'])
     #saving model to the disk
     pickle.dump(logR_pipeline_ngram,open('model_training/classifier_model/logR_model.sav','wb'))
 
-
+    # Line SVM Classifier
     svm_pipeline_ngram = Pipeline([
         ('svm_tfidf',tfidfconverter),
         ('svm_clf',CalibratedClassifierCV(base_estimator= LinearSVC(penalty='l2', dual=False), cv=5))
         ])
+    # Train model
     svm_pipeline_ngram.fit(documents,data['Label'])
     #saving model to the disk
     pickle.dump(svm_pipeline_ngram,open('model_training/classifier_model/svm_model.sav','wb'))
-
 
 	#saving best model to the disk
     pickle.dump(svm_pipeline_ngram,open('model_training/model.sav','wb'))
