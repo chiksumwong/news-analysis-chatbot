@@ -24,5 +24,5 @@ if __name__ == '__main__':
     svm_model_path = 'model_training/classifier_model/svm_model.sav'
 
     model_evaluate(nb_model_path, "Naive-Bayes Classifier")
-    model_evaluate(logR_model_path, "Naive-Bayes Classifier")
-    model_evaluate(svm_model_path, "Naive-Bayes Classifier")
+    model_evaluate(logR_model_path, "logistic Regression Classifier")
+    model_evaluate(svm_model_path, "Line SVM Classifier")
