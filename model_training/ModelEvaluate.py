@@ -25,4 +25,4 @@ if __name__ == '__main__':
 
     model_evaluate(nb_model_path, "Naive-Bayes Classifier")
     model_evaluate(logR_model_path, "Logistic Regression Classifier")
-    model_evaluate(svm_model_path, "Line SVM Classifier")
+    model_evaluate(svm_model_path, "Linear SVM Classifier")

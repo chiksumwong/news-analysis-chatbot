@@ -80,7 +80,7 @@ def model_training():
     #saving model to the disk
     pickle.dump(logR_pipeline_ngram,open('model_training/classifier_model/logR_model.sav','wb'))
 
-    # Line SVM Classifier
+    # Linear SVM Classifier
     svm_pipeline_ngram = Pipeline([
         ('svm_tfidf',tfidfconverter),
         ('svm_clf',CalibratedClassifierCV(base_estimator= LinearSVC(penalty='l2', dual=False), cv=5))
